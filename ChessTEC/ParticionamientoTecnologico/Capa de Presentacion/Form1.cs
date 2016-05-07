@@ -18,7 +18,7 @@ namespace ChessTEC
     {
         PictureBox[][] matrizBotones;
         Tablero tablero;
-        string turnoDe = "Blancas";
+        string turnoDe = "B";
 
         int f = 0, c = 0, fm = 0, cm = 0;
         bool seleccionado = false;
@@ -135,24 +135,6 @@ namespace ChessTEC
         protected void btn_Click(object sender, EventArgs e)
         {
             PictureBox btn = (PictureBox)sender;
-            //buscarBtn(btn.Name);
-            //if (turnoDe == "Blancas")
-            //{
-            //    if (seleccionado == false)
-            //    {
-            //        jugar(btn, "Blancas");
-            //    }
-            //    else {
-            //        if (tablero.matrizTablero[f][c].color == "B")
-            //        {
-            //            jugar(btn, "Blancas");
-            //        }
-            //    }
-            //}
-            //else {
-            //    if (tablero.matrizTablero[f][c].color == "N")
-            //        jugar(btn, "Negras");
-            //}
             jugar(btn);
         }
 
@@ -160,47 +142,47 @@ namespace ChessTEC
         {
             if (seleccionado == true && btn.BackColor == Color.Red)
             {
-                if (turnoDe == "Blancas")
+                if (turnoDe == "B")
                 {
-                    realizarComida(btn);
-                    turnoDe = "Negras";
+                    realizarComida(btn, turnoDe);
+                    turnoDe = "N";
                 }
                 else {
-                    realizarComida(btn);
-                    turnoDe = "Blancas";
+                    realizarComida(btn, turnoDe);
+                    turnoDe = "B";
                 }
             }
             else if (seleccionado == false && btn.BackColor != Color.Yellow)
             {
-                if (turnoDe == "Blancas")
+                if (turnoDe == "B")
                 {
-                    primerMovida(btn);
+                    primerMovida(btn, turnoDe);
                 }
                 else {
-                    primerMovida(btn);
+                    primerMovida(btn, turnoDe);
                 }
             }
             else if (seleccionado == true && btn.BackColor != Color.Yellow)
             {
                 //hacer busqueda de jugada en otra ficha
-                if (turnoDe == "Blancas")
+                if (turnoDe == "B")
                 {
-                    cambioDePieza(btn);
+                    cambioDePieza(btn, turnoDe);
                 }
                 else {
-                    cambioDePieza(btn);
+                    cambioDePieza(btn, turnoDe);
                 }
             }
             else if (seleccionado == true && btn.BackColor == Color.Yellow)
             {
-                if (turnoDe == "Blancas")
+                if (turnoDe == "B")
                 {
-                    moverPieza(btn);
-                    turnoDe = "Negras";
+                    moverPieza(btn, turnoDe);
+                    turnoDe = "N";
                 }
                 else {
-                    moverPieza(btn);
-                    turnoDe = "Blancas";
+                    moverPieza(btn, turnoDe);
+                    turnoDe = "B";
                 }
             }
             else {
@@ -210,7 +192,7 @@ namespace ChessTEC
             };
         }
 
-        private void moverPieza(PictureBox btn)
+        private void moverPieza(PictureBox btn, string turnoDe)
         {
             /////////////////////////////////////////////////////////////////////
             turno.Text = "jugada";
@@ -234,11 +216,11 @@ namespace ChessTEC
                     }
                 }
             }
-            tablero.calularTodo();
+            tablero.actualizarTodo();
             textBox1.Text = tablero.valorT.ToString();
         }
 
-        private void cambioDePieza(PictureBox btn)
+        private void cambioDePieza(PictureBox btn, string turnoDe)
         {
             List<int[]> movidas = tablero.matrizTablero[f][c].movilidad;
             foreach (int[] x in movidas)
@@ -275,7 +257,7 @@ namespace ChessTEC
             }
         }
 
-        private void primerMovida(PictureBox btn)
+        private void primerMovida(PictureBox btn, string turnoDe)
         {
             if (btn.ImageLocation == null)
             {
@@ -302,7 +284,7 @@ namespace ChessTEC
             }
         }
 
-        public void realizarComida(PictureBox btn)
+        public void realizarComida(PictureBox btn, string turnoDe)
         {
             for (int i = 0; i < matrizBotones.Length; i++)
             {
@@ -322,7 +304,7 @@ namespace ChessTEC
                     }
                 }
             }
-            tablero.calularTodo();
+            tablero.actualizarTodo();
             textBox1.Text = tablero.valorT.ToString();
         }
 
