@@ -153,136 +153,177 @@ namespace ChessTEC
             //    if (tablero.matrizTablero[f][c].color == "N")
             //        jugar(btn, "Negras");
             //}
-            jugar(btn, "Blancas");
+            jugar(btn);
         }
 
-        private void jugar(PictureBox btn, string esTurnoDe)
+        private void jugar(PictureBox btn)
         {
             if (seleccionado == true && btn.BackColor == Color.Red)
             {
-                for (int i = 0; i < matrizBotones.Length; i++)
+                if (turnoDe == "Blancas")
                 {
-                    for (int j = 0; j < matrizBotones[i].Length; j++)
-                    {
-                        if (matrizBotones[i][j].Name == btn.Name)
-                        {
-                            turno.Text = "| " + f.ToString() + " | " + c.ToString() + " |  comer";
-                            matrizBotones[i][j].BackColor = Color.AliceBlue;
-
-                            fm = i;
-                            cm = j;
-                            tablero.comerPieza(fm, cm, f, c);
-                            seleccionado = false;
-                            richTextBox1.Text = tablero.print();
-                            updateTablero();
-                        }
-                    }
+                    realizarComida(btn);
+                    turnoDe = "Negras";
                 }
-                tablero.calularTodo();
-                textBox1.Text = tablero.valorT.ToString();
-                //if (esTurnoDe == "Blancas")
-                //{
-                //    turnoDe = "Negras";
-                //}
-                //else {
-                //    turnoDe = "Blancas";
-                //}
+                else {
+                    realizarComida(btn);
+                    turnoDe = "Blancas";
+                }
             }
             else if (seleccionado == false && btn.BackColor != Color.Yellow)
             {
-                if (btn.ImageLocation == null)
+                if (turnoDe == "Blancas")
                 {
-                    turno.Text = "nulo";
-                    //btn.BackColor = Color.Red;
+                    primerMovida(btn);
                 }
-                else
-                {
-                    buscarBtn(btn.Name);
-                    tablero.buscarJugada(f, c);
-                    List<int[]> movidas = tablero.matrizTablero[f][c].movilidad;
-                    foreach (int[] x in movidas)
-                    {
-                        matrizBotones[x[0]][x[1]].BackColor = Color.Yellow;
-                    }
-                    List<int[]> comidas = tablero.matrizTablero[f][c].piezasComibles;
-                    foreach (int[] x in comidas)
-                    {
-                        matrizBotones[x[0]][x[1]].BackColor = Color.Red;
-                    }
-                    tablero.calularSeleccionada(f, c);
-                    textBox1.Text = tablero.valorS.ToString();
-                    seleccionado = true;
+                else {
+                    primerMovida(btn);
                 }
             }
             else if (seleccionado == true && btn.BackColor != Color.Yellow)
             {
                 //hacer busqueda de jugada en otra ficha
-                List<int[]> movidas = tablero.matrizTablero[f][c].movilidad;
-                foreach (int[] x in movidas)
+                if (turnoDe == "Blancas")
                 {
-                    matrizBotones[x[0]][x[1]].BackColor = Color.AliceBlue;
+                    cambioDePieza(btn);
                 }
-                List<int[]> comidas = tablero.matrizTablero[f][c].piezasComibles;
-                foreach (int[] x in comidas)
-                {
-                    matrizBotones[x[0]][x[1]].BackColor = Color.AliceBlue;
-                }
-                if (btn.ImageLocation == "")
-                {
-                    turno.Text = "nulo";
-                    //btn.BackColor = Color.Red;
-                }
-                else
-                {
-                    buscarBtn(btn.Name);
-                    tablero.buscarJugada(f, c);
-                    List<int[]> movidas2 = tablero.matrizTablero[f][c].movilidad;
-                    foreach (int[] x in movidas2)
-                    {
-                        matrizBotones[x[0]][x[1]].BackColor = Color.Yellow;
-                    }
-                    List<int[]> comidas2 = tablero.matrizTablero[f][c].piezasComibles;
-                    foreach (int[] x in comidas2)
-                    {
-                        matrizBotones[x[0]][x[1]].BackColor = Color.Red;
-                    }
-                    tablero.calularSeleccionada(f, c);
-                    textBox1.Text = tablero.valorS.ToString();
-                    seleccionado = true;
+                else {
+                    cambioDePieza(btn);
                 }
             }
             else if (seleccionado == true && btn.BackColor == Color.Yellow)
             {
-                /////////////////////////////////////////////////////////////////////
-                turno.Text = "jugada";
-                /////////////////////////////////////////////////////////////////////
-
-                for (int i = 0; i < matrizBotones.Length; i++)
+                if (turnoDe == "Blancas")
                 {
-                    for (int j = 0; j < matrizBotones[i].Length; j++)
-                    {
-                        if (matrizBotones[i][j].Name == btn.Name)
-                        {
-                            turno.Text += "| " + i.ToString() + " | " + j.ToString() + " |";
-                            matrizBotones[i][j].BackColor = Color.AliceBlue;
-
-                            fm = i;
-                            cm = j;
-                            tablero.moverPieza(fm, cm, f, c);
-                            seleccionado = false;
-                            richTextBox1.Text = tablero.print();
-                            updateTablero();
-                        }
-                    }
+                    moverPieza(btn);
+                    turnoDe = "Negras";
                 }
-                tablero.calularTodo();
-                textBox1.Text = tablero.valorT.ToString();
+                else {
+                    moverPieza(btn);
+                    turnoDe = "Blancas";
+                }
             }
             else {
                 /////////////////////////////////////////////////////////////////////
                 turno.Text = "no valida";
                 /////////////////////////////////////////////////////////////////////
             };
+        }
+
+        private void moverPieza(PictureBox btn)
+        {
+            /////////////////////////////////////////////////////////////////////
+            turno.Text = "jugada";
+            /////////////////////////////////////////////////////////////////////
+
+            for (int i = 0; i < matrizBotones.Length; i++)
+            {
+                for (int j = 0; j < matrizBotones[i].Length; j++)
+                {
+                    if (matrizBotones[i][j].Name == btn.Name)
+                    {
+                        turno.Text += "| " + i.ToString() + " | " + j.ToString() + " |";
+                        matrizBotones[i][j].BackColor = Color.AliceBlue;
+
+                        fm = i;
+                        cm = j;
+                        tablero.moverPieza(fm, cm, f, c);
+                        seleccionado = false;
+                        richTextBox1.Text = tablero.print();
+                        updateTablero();
+                    }
+                }
+            }
+            tablero.calularTodo();
+            textBox1.Text = tablero.valorT.ToString();
+        }
+
+        private void cambioDePieza(PictureBox btn)
+        {
+            List<int[]> movidas = tablero.matrizTablero[f][c].movilidad;
+            foreach (int[] x in movidas)
+            {
+                matrizBotones[x[0]][x[1]].BackColor = Color.AliceBlue;
+            }
+            List<int[]> comidas = tablero.matrizTablero[f][c].piezasComibles;
+            foreach (int[] x in comidas)
+            {
+                matrizBotones[x[0]][x[1]].BackColor = Color.AliceBlue;
+            }
+            if (btn.ImageLocation == "")
+            {
+                turno.Text = "nulo";
+                //btn.BackColor = Color.Red;
+            }
+            else
+            {
+                buscarBtn(btn.Name);
+                tablero.buscarJugada(f, c);
+                List<int[]> movidas2 = tablero.matrizTablero[f][c].movilidad;
+                foreach (int[] x in movidas2)
+                {
+                    matrizBotones[x[0]][x[1]].BackColor = Color.Yellow;
+                }
+                List<int[]> comidas2 = tablero.matrizTablero[f][c].piezasComibles;
+                foreach (int[] x in comidas2)
+                {
+                    matrizBotones[x[0]][x[1]].BackColor = Color.Red;
+                }
+                tablero.calularSeleccionada(f, c);
+                textBox1.Text = tablero.valorS.ToString();
+                seleccionado = true;
+            }
+        }
+
+        private void primerMovida(PictureBox btn)
+        {
+            if (btn.ImageLocation == null)
+            {
+                turno.Text = "nulo";
+                //btn.BackColor = Color.Red;
+            }
+            else
+            {
+                buscarBtn(btn.Name);
+                tablero.buscarJugada(f, c);
+                List<int[]> movidas = tablero.matrizTablero[f][c].movilidad;
+                foreach (int[] x in movidas)
+                {
+                    matrizBotones[x[0]][x[1]].BackColor = Color.Yellow;
+                }
+                List<int[]> comidas = tablero.matrizTablero[f][c].piezasComibles;
+                foreach (int[] x in comidas)
+                {
+                    matrizBotones[x[0]][x[1]].BackColor = Color.Red;
+                }
+                tablero.calularSeleccionada(f, c);
+                textBox1.Text = tablero.valorS.ToString();
+                seleccionado = true;
+            }
+        }
+
+        public void realizarComida(PictureBox btn)
+        {
+            for (int i = 0; i < matrizBotones.Length; i++)
+            {
+                for (int j = 0; j < matrizBotones[i].Length; j++)
+                {
+                    if (matrizBotones[i][j].Name == btn.Name)
+                    {
+                        turno.Text = "| " + f.ToString() + " | " + c.ToString() + " |  comer";
+                        matrizBotones[i][j].BackColor = Color.AliceBlue;
+
+                        fm = i;
+                        cm = j;
+                        tablero.comerPieza(fm, cm, f, c);
+                        seleccionado = false;
+                        richTextBox1.Text = tablero.print();
+                        updateTablero();
+                    }
+                }
+            }
+            tablero.calularTodo();
+            textBox1.Text = tablero.valorT.ToString();
         }
 
         private void buscarBtn(string nombre)
