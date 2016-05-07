@@ -89,9 +89,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ParticionamientoTecnologico\Capa de Negocios\Arbol\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Recursos\Alfil_blanco.PNG" />
     <Content Include="Recursos\Alfil_negro.PNG" />

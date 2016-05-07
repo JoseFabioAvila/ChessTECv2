@@ -15,6 +15,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
         public double valorB { get; set; }
         public double valorN { get; set; }
         public double valorT { get; set; }
+        public string turno  { get; set; }
 
         public Tablero() {
             matrizTablero = new Pieza[8][];
@@ -30,6 +31,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             valorB = 0;
             valorN = 0;
             valorT = 0;
+            turno = "B";
             calularTodo();
         }
 
@@ -76,7 +78,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             
         }
 
-        internal void buscarJugada(int f, int c)
+        internal void buscarJugada(int f, int c, string turno, bool bandera)
         {
             //List<int[]> movidas = new List<int[]>();
             //cordenadas.AddLast(new int[] { 1, 5 });
@@ -86,8 +88,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             //cordenadas.AddLast(new int[] { 5, 5 });
 
             //aqui se genrara las cordenadas con los movimientos de la ficha.
-            
-            matrizTablero[f][c].actualizarMov(f, c, this);
+            this.turno = turno;
+            if (matrizTablero[f][c].color.Equals(turno))
+            {
+                matrizTablero[f][c].actualizarMov(f, c, this);
+            }
         }
 
         internal void moverPieza(int fm, int cm, int f, int c)

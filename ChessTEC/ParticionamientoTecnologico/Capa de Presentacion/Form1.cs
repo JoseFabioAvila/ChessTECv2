@@ -145,11 +145,11 @@ namespace ChessTEC
                 if (turnoDe == "B")
                 {
                     realizarComida(btn, turnoDe);
-                    turnoDe = "N";
+                    informarCambioTurno("N");
                 }
                 else {
                     realizarComida(btn, turnoDe);
-                    turnoDe = "B";
+                    informarCambioTurno("B");
                 }
             }
             else if (seleccionado == false && btn.BackColor != Color.Yellow)
@@ -178,24 +178,31 @@ namespace ChessTEC
                 if (turnoDe == "B")
                 {
                     moverPieza(btn, turnoDe);
-                    turnoDe = "N";
+                    informarCambioTurno("N");
                 }
                 else {
                     moverPieza(btn, turnoDe);
-                    turnoDe = "B";
+                    informarCambioTurno("B");
                 }
             }
             else {
                 /////////////////////////////////////////////////////////////////////
-                turno.Text = "no valida";
+                //turno.Text = "no valida";
                 /////////////////////////////////////////////////////////////////////
             };
+        }
+
+        private void informarCambioTurno(string jugador)
+        {
+            turnoDe = jugador;
+            if (turnoDe == "B") { turno.Text = "Turno del blanco"; }
+            else { turno.Text = "Turno del negro"; }
         }
 
         private void moverPieza(PictureBox btn, string turnoDe)
         {
             /////////////////////////////////////////////////////////////////////
-            turno.Text = "jugada";
+            //turno.Text = "jugada";
             /////////////////////////////////////////////////////////////////////
 
             for (int i = 0; i < matrizBotones.Length; i++)
@@ -204,7 +211,7 @@ namespace ChessTEC
                 {
                     if (matrizBotones[i][j].Name == btn.Name)
                     {
-                        turno.Text += "| " + i.ToString() + " | " + j.ToString() + " |";
+                        //turno.Text += "| " + i.ToString() + " | " + j.ToString() + " |";
                         matrizBotones[i][j].BackColor = Color.AliceBlue;
 
                         fm = i;
@@ -234,13 +241,13 @@ namespace ChessTEC
             }
             if (btn.ImageLocation == "")
             {
-                turno.Text = "nulo";
+                //turno.Text = "nulo";
                 //btn.BackColor = Color.Red;
             }
             else
             {
                 buscarBtn(btn.Name);
-                tablero.buscarJugada(f, c);
+                tablero.buscarJugada(f, c, turnoDe, seleccionado);
                 List<int[]> movidas2 = tablero.matrizTablero[f][c].movilidad;
                 foreach (int[] x in movidas2)
                 {
@@ -261,13 +268,13 @@ namespace ChessTEC
         {
             if (btn.ImageLocation == null)
             {
-                turno.Text = "nulo";
+                //turno.Text = "nulo";
                 //btn.BackColor = Color.Red;
             }
             else
             {
                 buscarBtn(btn.Name);
-                tablero.buscarJugada(f, c);
+                tablero.buscarJugada(f, c, turnoDe, seleccionado);
                 List<int[]> movidas = tablero.matrizTablero[f][c].movilidad;
                 foreach (int[] x in movidas)
                 {
@@ -292,7 +299,7 @@ namespace ChessTEC
                 {
                     if (matrizBotones[i][j].Name == btn.Name)
                     {
-                        turno.Text = "| " + f.ToString() + " | " + c.ToString() + " |  comer";
+                        //turno.Text = "| " + f.ToString() + " | " + c.ToString() + " |  comer";
                         matrizBotones[i][j].BackColor = Color.AliceBlue;
 
                         fm = i;

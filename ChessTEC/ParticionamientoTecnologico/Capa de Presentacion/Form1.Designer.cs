@@ -1129,9 +1129,9 @@
             this.turno.AutoSize = true;
             this.turno.Location = new System.Drawing.Point(717, 64);
             this.turno.Name = "turno";
-            this.turno.Size = new System.Drawing.Size(116, 17);
+            this.turno.Size = new System.Drawing.Size(115, 17);
             this.turno.TabIndex = 19;
-            this.turno.Text = "Turno del Blanco";
+            this.turno.Text = "Turno del blanco";
             this.turno.Click += new System.EventHandler(this.turno_Click);
             // 
             // richTextBox1
