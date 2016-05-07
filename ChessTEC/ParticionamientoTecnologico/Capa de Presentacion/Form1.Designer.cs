@@ -1059,7 +1059,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(16, 17);
             this.label9.TabIndex = 11;
-            this.label9.Text = "1";
+            this.label9.Text = "8";
             // 
             // label10
             // 
@@ -1068,7 +1068,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(16, 17);
             this.label10.TabIndex = 12;
-            this.label10.Text = "2";
+            this.label10.Text = "7";
             // 
             // label11
             // 
@@ -1077,7 +1077,7 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(16, 17);
             this.label11.TabIndex = 13;
-            this.label11.Text = "3";
+            this.label11.Text = "6";
             // 
             // label12
             // 
@@ -1086,7 +1086,7 @@
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(16, 17);
             this.label12.TabIndex = 14;
-            this.label12.Text = "4";
+            this.label12.Text = "5";
             // 
             // label13
             // 
@@ -1095,7 +1095,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(16, 17);
             this.label13.TabIndex = 15;
-            this.label13.Text = "5";
+            this.label13.Text = "4";
             // 
             // label14
             // 
@@ -1104,7 +1104,7 @@
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(16, 17);
             this.label14.TabIndex = 16;
-            this.label14.Text = "6";
+            this.label14.Text = "3";
             // 
             // label15
             // 
@@ -1113,7 +1113,7 @@
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(16, 17);
             this.label15.TabIndex = 17;
-            this.label15.Text = "7";
+            this.label15.Text = "2";
             // 
             // label16
             // 
@@ -1122,7 +1122,7 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(16, 17);
             this.label16.TabIndex = 18;
-            this.label16.Text = "8";
+            this.label16.Text = "1";
             // 
             // turno
             // 
@@ -1137,7 +1137,7 @@
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(676, 98);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(293, 249);
             this.richTextBox1.TabIndex = 20;
