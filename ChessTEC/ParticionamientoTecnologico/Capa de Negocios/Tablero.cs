@@ -55,7 +55,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             matrizTablero[1][6] = new Peon("player2");
             matrizTablero[1][7] = new Peon("player2");
 
-
             //fichas player 2
             matrizTablero[6][0] = new Peon("player1");
             matrizTablero[6][1] = new Peon("player1");
@@ -65,7 +64,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             matrizTablero[6][5] = new Peon("player1");
             matrizTablero[6][6] = new Peon("player1");
             matrizTablero[6][7] = new Peon("player1");
-
+            
             matrizTablero[7][0] = new Torre("player1");
             matrizTablero[7][1] = new Caballo("player1");
             matrizTablero[7][2] = new Alfil("player1");
@@ -74,6 +73,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             matrizTablero[7][5] = new Alfil("player1");
             matrizTablero[7][6] = new Caballo("player1");
             matrizTablero[7][7] = new Torre("player1");
+            
         }
 
         internal void buscarJugada(int f, int c)
@@ -154,6 +154,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
 
         public void actualizarTodo()
         {
+            valorB = 0;
+            valorN = 0;
+            valorT = 0;
             for (int i = 0; i < matrizTablero.Length; i++)
             {
                 for (int j = 0; j < matrizTablero[i].Length; j++)
