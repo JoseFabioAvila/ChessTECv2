@@ -111,6 +111,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 }
             }
         }
+
         private void checkAdd(int fila, int colnm, Tablero tablero)
         {
             int[] mov = new int[] { fila, colnm };

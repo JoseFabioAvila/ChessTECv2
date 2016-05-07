@@ -28,7 +28,29 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 
         public override void calcularValor(int fila, int columna, Tablero tablero)
         {
+            this.valor = (double)5 +
+                ((double)movilidad.Count * 0.1) +
+                (defensa(fila, columna, tablero) * 0.05);
+        }
 
+        private double defensa(int fila, int columna, Tablero tablero)
+        {
+            double counter = 0.0;
+            for (int f = 0; f < 8; f++)
+            {
+                for (int c = 0; c < 8; c++)
+                {
+                    if (tablero.matrizTablero[f][c] != null)
+                    {
+                        if (tablero.matrizTablero[f][c].color.Equals(this.color)
+                            && verificarMovida(f, c))
+                        {
+                            counter = counter + (double)1.0;
+                        }
+                    }
+                }
+            }
+            return counter;
         }
 
         public override void actualizarMov(int fila, int columna, Tablero tablero)

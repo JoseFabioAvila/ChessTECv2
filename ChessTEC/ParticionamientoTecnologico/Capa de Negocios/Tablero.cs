@@ -152,6 +152,28 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             valorT = valorB - valorN;
         }
 
+        public void actualizarTodo()
+        {
+            for (int i = 0; i < matrizTablero.Length; i++)
+            {
+                for (int j = 0; j < matrizTablero[i].Length; j++)
+                {
+
+                    if (matrizTablero[i][j] != null)
+                    {
+                        if (matrizTablero[i][j].color == "B")
+                        {
+                            valorB += matrizTablero[i][j].valor;
+                        }
+                        else {
+                            valorN += matrizTablero[i][j].valor;
+                        }
+                    }
+                }
+            }
+            valorT = valorB - valorN;
+        }
+
         public void calularSeleccionada(int f, int c)
         {
             for(int i = 0; i < matrizTablero.Length; i++)

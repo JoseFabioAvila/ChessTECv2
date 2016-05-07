@@ -24,12 +24,20 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             }
 
             this.simbologia = "R";
-            this.valor = 1000;
+            this.valor = (double)1000;
         }
 
         public override void calcularValor(int fila, int columna, Tablero tablero)
         {
+            this.valor = (double)1000+
+                lineasDefendidas(fila, columna,tablero)*0.05;
+        }
 
+        private double lineasDefendidas(int fila, int columna, Tablero tablero)
+        {
+            // fila + 1 // columna +,-,=
+            // fila // columna + , - 
+            return 0.0;
         }
 
         public override void actualizarMov(int fila, int columna, Tablero tablero)
