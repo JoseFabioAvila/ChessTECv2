@@ -33,6 +33,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 
         public override void calcularValor(int fila, int columna, Tablero tablero)
         {
+            valor = 1;
             peonCentrado(columna);
             peonAvanzado(fila);
             peonPasadoODoblado(fila, columna, tablero);
@@ -45,7 +46,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 
             if (this.color.Equals("B"))
             {
-                for (int i = fila-1; i > 1; i--)
+                for (int i = fila-1; i > 0; i--)
                 {
                     if (tablero.matrizTablero[i][columna] != null) // Frente
                     {
@@ -53,12 +54,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                         {
                             valor = valor - (double)0.25;
                             obstaculoFrontal = true;
-                            break;
                         }
                         else
                         {
                             obstaculoFrontal = true;
-                            break;
                         }
                     }
                     if(columna+1<8){
@@ -67,7 +66,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                             if (!tablero.matrizTablero[i][columna + 1].color.Equals(this.color))
                             {
                                 obstaculoLateral = true;
-                                break;
                             }
                         }
                     }
@@ -78,16 +76,14 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                             if (!tablero.matrizTablero[i][columna - 1].color.Equals(this.color))
                             {
                                 obstaculoLateral = true;
-                                break;
                             }
                         }
                     }
                 }
-
             }
             else
             {
-                for (int i = fila; i < 7; i++)
+                for (int i = fila+1; i < 7; i++)
                 {
                     if (tablero.matrizTablero[i][columna] != null)
                     {
@@ -95,12 +91,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                         {
                             valor = valor - (double)0.25;
                             obstaculoFrontal = true;
-                            break;
                         }
                         else
                         {
                             obstaculoFrontal = true;
-                            break;
                         }
                     }
                     if (columna + 1 < 8)
@@ -110,7 +104,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                             if (!tablero.matrizTablero[i][columna + 1].color.Equals(this.color))
                             {
                                 obstaculoLateral = true;
-                                break;
                             }
                         }
                     }
@@ -121,7 +114,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                             if (!tablero.matrizTablero[i][columna - 1].color.Equals(this.color))
                             {
                                 obstaculoLateral = true;
-                                break;
                             }
                         }
                     }
@@ -138,9 +130,19 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 
         private void peonAvanzado(int fila)
         {
-            if(fila >= 5)
+            if (color.Equals("N"))
             {
-                valor = valor + ((fila - 5) * 1.5) - 1;
+                if (fila >= 5)
+                {
+                    valor = (valor - 1) + ((fila - 4) * 1.5);
+                }
+            }
+            else
+            {
+                if (fila <=2)
+                {
+                    valor = (valor - 1) + (((fila - 3)*-1) * 1.5);
+                }
             }
         }
 
@@ -192,8 +194,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 
             comerDer(tempF, columna, tablero);
         }
-
-
+        
         private void avanzar(int fila, int tempF, int tempF2, int columna, int posIni, Tablero tablero) {
             if (tablero.matrizTablero[tempF][columna] == null) // Avanzar
             {
@@ -210,8 +211,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 }
             }
         }
-
-
+        
         private void comerDer(int tempF, int columna, Tablero tablero)
         {
             if (columna + 1 < 8)
@@ -227,8 +227,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 }
             }
         }
-
-
+        
         private void comerIzq(int tempF, int columna, Tablero tablero)
         {
             if (columna - 1 >= 0)
@@ -244,8 +243,5 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 }
             }
         }
-
-
-
     }
 }
