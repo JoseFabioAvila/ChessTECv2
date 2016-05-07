@@ -11,6 +11,9 @@ using System.Windows.Forms;
 
 namespace ChessTEC
 {
+    /// <summary>
+    /// clase de la interfaz
+    /// </summary>
     public partial class Form1 : Form
     {
         PictureBox[][] matrizBotones;
