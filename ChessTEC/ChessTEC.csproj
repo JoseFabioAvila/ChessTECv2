@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParticionamientoTecnologico\Capa de Negocios\Arbol\Arbol.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa de Negocios\Arbol\A_Estrella.cs" />
+    <Compile Include="ParticionamientoTecnologico\Capa de Negocios\Arbol\NodoArbol.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa de Negocios\Piezas\Alfil.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa de Negocios\Piezas\Caballo.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa de Negocios\Piezas\Peon.cs" />

@@ -90,14 +90,20 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
         {
             int[] mov = new int[] { fila, colnm };
 
-            if (tablero.matrizTablero[fila][colnm] == null)
+            if (fila >= 0 && fila <= 7)
             {
-                movilidad.Add(mov);
-            }
-            else if (!tablero.matrizTablero[fila][colnm].color.Equals(this.color))
-            {
-                movilidad.Add(mov);
-                piezasComibles.Add(mov);
+                if (colnm >= 0 && colnm <= 7)
+                {
+                    if (tablero.matrizTablero[fila][colnm] == null)
+                    {
+                        movilidad.Add(mov);
+                    }
+                    else if (!tablero.matrizTablero[fila][colnm].color.Equals(this.color))
+                    {
+                        movilidad.Add(mov);
+                        piezasComibles.Add(mov);
+                    }
+                }
             }
         }
     }
