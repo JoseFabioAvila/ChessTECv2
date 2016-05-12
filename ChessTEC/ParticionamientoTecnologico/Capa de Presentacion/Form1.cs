@@ -228,7 +228,7 @@ namespace ChessTEC
                     }
                 }
             }
-            tablero.actualizarTodo();
+            tablero.calularTodo();
             textBox1.Text = tablero.valorT.ToString();
             seleccionado = false;
         }
@@ -324,7 +324,7 @@ namespace ChessTEC
                     }
                 }
             }
-            tablero.actualizarTodo();
+            tablero.calularTodo();
             textBox1.Text = tablero.valorT.ToString();
             seleccionado = false;
         }

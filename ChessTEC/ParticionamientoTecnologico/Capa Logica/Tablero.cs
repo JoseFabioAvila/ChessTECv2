@@ -160,6 +160,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
 
         public void calularTodo()
         {
+            valorB = 0;
+            valorN = 0;
+            valorT = 0;
             for (int i = 0; i < matrizTablero.Length; i++)
             {
                 for (int j = 0; j < matrizTablero[i].Length; j++)
