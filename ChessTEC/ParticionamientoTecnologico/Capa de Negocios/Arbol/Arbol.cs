@@ -16,8 +16,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
         {
             if (value == null)
             {
-                throw new ArgumentNullException(
-                    "Cannot insert null value!");
+                throw new ArgumentNullException("Cannot insert null value!");
             }
 
             this.root = new NodoArbol(value);
