@@ -78,6 +78,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             
         }
 
+        
+
         internal void buscarJugada(int f, int c, string turno, bool bandera)
         {
             //List<int[]> movidas = new List<int[]>();
@@ -116,6 +118,33 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             string res = "\n";
             foreach (Pieza[] p in matrizTablero) {
                 foreach (Pieza pi in p) {
+                    if (pi == null)
+                    {
+                        res += "  0   |";
+                    }
+                    else {
+                        if (pi.color.Equals("B"))
+                        {
+                            res += "  B  |";
+                        }
+                        else {
+                            res += "  N  |";
+                        }
+                    }
+                }
+                res += "\n";
+            }
+            return res;
+        }
+
+        internal string print2(string spaces)
+        {
+            string res = "\n";
+            foreach (Pieza[] p in matrizTablero)
+            {
+                res += spaces;
+                foreach (Pieza pi in p)
+                {
                     if (pi == null)
                     {
                         res += "  0   |";

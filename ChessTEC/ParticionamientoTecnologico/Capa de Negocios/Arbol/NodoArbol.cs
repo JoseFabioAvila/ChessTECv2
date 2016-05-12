@@ -9,13 +9,15 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
     class NodoArbol
     {
         // Contains the value of the node
-        private Tablero value;
+        public Tablero value { get; set; }
 
         // Shows whether the current node has a parent or not
-        private bool hasParent;
+        public bool hasParent { get; set;  }
 
         // Contains the children of the node (zero or more)
-        private List<NodoArbol> children;
+        public List<NodoArbol> children { get; set; }
+
+
 
         /// <summary>Constructs a tree node</summary>
         /// <param name="value">the value of the node</param>
@@ -30,26 +32,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             this.children = new List<NodoArbol>();
         }
 
-        /// <summary>The value of the node</summary>
-        public Tablero Value
-        {
-            get
-            {
-                return this.value;
-            }
-            set
-            {
-                this.value = value;
-            }
-        }
-
         /// <summary>The number of node's children</summary>
-        public int ChildrenCount
+        public int ChildrenCount()
         {
-            get
-            {
-                return this.children.Count;
-            }
+            return this.children.Count;
         }
 
         /// <summary>Adds child to the node</summary>

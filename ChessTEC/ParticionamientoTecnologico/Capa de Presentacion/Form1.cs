@@ -1,4 +1,5 @@
 ﻿using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios;
+using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -356,6 +357,13 @@ namespace ChessTEC
                     matrizBotones[i][j].BackColor = Color.AliceBlue;
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Arbol x = new Arbol(tablero);
+            x.generarArbol(x.root, 3);
+            x.TraverseDFS();
         }
     }
 }
