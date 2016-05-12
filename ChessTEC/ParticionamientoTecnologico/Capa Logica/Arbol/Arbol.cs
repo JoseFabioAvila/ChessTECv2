@@ -8,7 +8,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 {
     class Arbol
     {
-        public NodoArbol root { get; set; }
+        public Nodo root { get; set; }
         
 
         /// <summary>Constructs the tree</summary>
@@ -20,11 +20,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                 throw new ArgumentNullException("Cannot insert null value!");
             }
 
-            this.root = new NodoArbol(value);
+            this.root = new Nodo(value);
         }
 
 
-        public void generarArbol(NodoArbol root, int profundidad) {
+        public void generarArbol(Nodo root, int profundidad) {
             if (this.root == null)
             {
                 return;
@@ -45,7 +45,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                     Tablero ntablero = root.value;
                                     ntablero.matrizTablero = root.value.matrizTablero;
                                     ntablero.moverPieza(mov[0], mov[1], f, c);
-                                    root.AddChild(new NodoArbol(ntablero));
+                                    root.AddChild(new Nodo(ntablero));
                                 }
                             }
                             //if (root.value.matrizTablero[f][c].piezasComibles != null)
@@ -74,7 +74,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
         /// traversed</param>
         /// <param name="spaces">the spaces used for
         /// representation of the parent-child relation</param>
-        private void PrintDFS(NodoArbol root, string spaces, int nivel)
+        private void PrintDFS(Nodo root, string spaces, int nivel)
         {
             if (this.root == null)
             {
@@ -83,7 +83,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             Console.WriteLine(spaces + "--> nivel " +nivel.ToString());
             Console.WriteLine(spaces + root.value.print2(spaces));
 
-            NodoArbol child = null;
+            Nodo child = null;
             for (int i = 0; i < root.ChildrenCount(); i++)
             {
                 child = root.GetChild(i);

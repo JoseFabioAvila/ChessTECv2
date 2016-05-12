@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 {
-    class NodoArbol
+    class Nodo
     {
         // Contains the value of the node
         public Tablero value { get; set; }
@@ -15,13 +15,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
         public bool hasParent { get; set;  }
 
         // Contains the children of the node (zero or more)
-        public List<NodoArbol> children { get; set; }
+        public List<Nodo> children { get; set; }
 
 
 
         /// <summary>Constructs a tree node</summary>
         /// <param name="value">the value of the node</param>
-        public NodoArbol(Tablero value)
+        public Nodo(Tablero value)
         {
             if (value == null)
             {
@@ -29,7 +29,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                     "Cannot insert null value!");
             }
             this.value = value;
-            this.children = new List<NodoArbol>();
+            this.children = new List<Nodo>();
         }
 
         /// <summary>The number of node's children</summary>
@@ -40,7 +40,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 
         /// <summary>Adds child to the node</summary>
         /// <param name="child">the child to be added</param>
-        public void AddChild(NodoArbol child)
+        public void AddChild(Nodo child)
         {
             if (child == null)
             {
@@ -63,7 +63,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
         /// </summary>
         /// <param name="index">the index of the desired child</param>
         /// <returns>the child on the given position</returns>
-        public NodoArbol GetChild(int index)
+        public Nodo GetChild(int index)
         {
             return this.children[index];
         }
