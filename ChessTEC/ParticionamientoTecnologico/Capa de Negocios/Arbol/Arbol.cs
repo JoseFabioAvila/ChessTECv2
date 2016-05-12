@@ -42,9 +42,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                             {
                                 foreach (int[] mov in root.value.matrizTablero[f][c].movilidad)
                                 {
-                                    Tablero ntablero = new Tablero();
+                                    Tablero ntablero = root.value;
                                     ntablero.matrizTablero = root.value.matrizTablero;
-                                    ntablero.moverPieza(mov[1], mov[0], f, c);
+                                    ntablero.moverPieza(mov[0], mov[1], f, c);
                                     root.AddChild(new NodoArbol(ntablero));
                                 }
                             }

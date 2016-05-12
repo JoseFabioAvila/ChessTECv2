@@ -80,14 +80,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
 
         
 
-        internal void buscarJugada(int f, int c, string turno, bool bandera)
+        public void buscarJugada(int f, int c, string turno, bool bandera)
         {
-            //List<int[]> movidas = new List<int[]>();
-            //cordenadas.AddLast(new int[] { 1, 5 });
-            //cordenadas.AddLast(new int[] { 2, 5 });
-            //cordenadas.AddLast(new int[] { 3, 5 });
-            //cordenadas.AddLast(new int[] { 4, 5 });
-            //cordenadas.AddLast(new int[] { 5, 5 });
 
             //aqui se genrara las cordenadas con los movimientos de la ficha.
             this.turno = turno;
@@ -97,7 +91,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             }
         }
 
-        internal void moverPieza(int fm, int cm, int f, int c)
+        public void moverPieza(int fm, int cm, int f, int c)
         {
             if (matrizTablero[f][c].verificarMovida(fm, cm))
             {
@@ -107,7 +101,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             }
         }
 
-        internal void comerPieza(int fm, int cm, int f, int c)
+        public void comerPieza(int fm, int cm, int f, int c)
         {
             Pieza piezaSeleccionada = matrizTablero[f][c];
             matrizTablero[f][c] = null;
@@ -137,7 +131,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             return res;
         }
 
-        internal string print2(string spaces)
+        public string print2(string spaces)
         {
             string res = "\n";
             foreach (Pieza[] p in matrizTablero)
