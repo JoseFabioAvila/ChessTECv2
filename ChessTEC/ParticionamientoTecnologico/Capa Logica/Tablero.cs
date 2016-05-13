@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
 {
+    /// <summary>
+    /// Clase del tablero
+    /// </summary>
     class Tablero
     {
         /// <summary>

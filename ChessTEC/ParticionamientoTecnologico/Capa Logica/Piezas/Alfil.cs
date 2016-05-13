@@ -7,8 +7,15 @@ using System.Drawing;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 {
+    /// <summary>
+    /// Clase de pieza Alfil
+    /// </summary>
     class Alfil : Pieza
     {
+        /// <summary>
+        /// Constructor de la pieza alfil
+        /// </summary>
+        /// <param name="jugador"></param>
         public Alfil(string jugador)
         {
             movilidad = new List<int[]>();
@@ -26,6 +33,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             this.valor = (double)3;
         }
 
+        /// <summary>
+        /// Calcula el valor de la torre
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void calcularValor(int fila, int columna, Tablero tablero)
         {
             this.valor = (double)3 +
