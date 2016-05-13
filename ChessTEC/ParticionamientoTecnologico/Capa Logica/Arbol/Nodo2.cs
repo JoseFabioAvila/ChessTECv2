@@ -22,40 +22,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
             this.tablero = tab;
             this.recorrido = recorrido;
             this.turno = turno;
+            this.hijos = new List<Nodo2>();
         }
 
         public void agregarHijo()
         {
             this.hijos.Add(this);
-        }
-
-        public void expandir()
-        {
-            for (int x = 0; x < tablero.matrizTablero.Length; x++)
-            {
-                for (int y = 0; y < tablero.matrizTablero[x].Length; y++)
-                {
-                    if (tablero.matrizTablero[x][y] != null && tablero.matrizTablero[x][y].color == turno)
-                    {                       
-                        for (int i = 0; i < tablero.matrizTablero[x][y].movilidad.Count; i++)
-                        {
-                            Tablero t = new Tablero(tablero.matrizTablero, tablero.turno);
-                            int[] movilidad = t.matrizTablero[x][y].movilidad.ElementAt(i);
-
-                            t.moverPieza(movilidad[0], movilidad[1], x, y);
-
-                            if (t.turno.Equals("B"))
-                            {
-                                t.turno = "N";
-                            }
-                            else {
-                                t.turno = "B";
-                            }
-                            this.hijos.Add(new Nodo2( t, t.matrizTablero[x][y].simbologia+x.ToString()+y.ToString(), t.turno));
-                        }                        
-                    }
-                }
-            }
-        }
+        } 
     }
 }

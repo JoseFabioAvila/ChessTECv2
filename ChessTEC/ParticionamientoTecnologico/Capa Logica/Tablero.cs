@@ -52,8 +52,23 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
 
         public Tablero(Pieza[][] mt, string t)
         {
-            this.matrizTablero = mt;
-            this.turno = turno;
+            matrizTablero = new Pieza[8][];
+            for (int i = 0; i < matrizTablero.Length; i++)
+            {
+                //Console.WriteLine(i.ToString());
+
+                matrizTablero[i] = new Pieza[8];
+                matrizTablero[i][0] = mt[i][0];
+                matrizTablero[i][1] = mt[i][1];
+                matrizTablero[i][2] = mt[i][2];
+                matrizTablero[i][3] = mt[i][3];
+                matrizTablero[i][4] = mt[i][4];
+                matrizTablero[i][5] = mt[i][5];
+                matrizTablero[i][6] = mt[i][6];
+                matrizTablero[i][7] = mt[i][7];
+            }
+            //this.matrizTablero = mt;
+            this.turno = t.ToString();
             valorS = 0;
             valorB = 0;
             valorN = 0;

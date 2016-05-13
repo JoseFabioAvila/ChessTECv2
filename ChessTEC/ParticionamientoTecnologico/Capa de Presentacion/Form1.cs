@@ -422,7 +422,7 @@ namespace ChessTEC
         private void button1_Click(object sender, EventArgs e)
         {
             Arbol x = new Arbol(tablero);
-            x.generarArbol(x.root, 3);
+            x.expandir(x.raiz, 3, 0);
             x.TraverseDFS();
         }
     }
