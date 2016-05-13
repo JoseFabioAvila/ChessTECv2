@@ -35,6 +35,29 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             calularTodo();
         }
 
+        public Tablero(Pieza[][] mt, string t)
+        {
+            this.matrizTablero = mt;
+            this.turno = turno;
+            valorS = 0;
+            valorB = 0;
+            valorN = 0;
+            valorT = 0;
+
+            for (int x = 0; x < matrizTablero.Length; x++)
+            {
+                for (int y = 0; y < matrizTablero[x].Length; y++)
+                {
+                    if (matrizTablero[x][y] != null && matrizTablero[x][y].color == turno)
+                    {
+                        matrizTablero[x][y].actualizarMov(x, y, this);
+                    }
+                }
+            }
+
+            calularTodo();
+        }
+
         private void colocarFichas()
         {
             
@@ -77,8 +100,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             matrizTablero[7][7] = new Torre("player1");
             
         }
-
-        
 
         public void buscarJugada(int f, int c, string turno, bool bandera)
         {
@@ -223,5 +244,4 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             }
         }
     }
-
 }
