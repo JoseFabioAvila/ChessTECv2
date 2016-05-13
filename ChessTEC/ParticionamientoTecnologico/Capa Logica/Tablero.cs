@@ -9,14 +9,26 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
 {
     class Tablero
     {
+        /// <summary>
+        /// Matriz del tablero.
+        /// </summary>
         public Pieza[][] matrizTablero { get; set; }
 
+        /// <summary>
+        /// Valores de la heuristica
+        /// </summary>
         public double valorS { get; set; }
         public double valorB { get; set; }
         public double valorN { get; set; }
         public double valorT { get; set; }
+        /// <summary>
+        /// Turno
+        /// </summary>
         public string turno  { get; set; }
 
+        /// <summary>
+        /// Constructor de la clase tablero
+        /// </summary>
         public Tablero() {
             matrizTablero = new Pieza[8][];
             for (int i = 0; i < matrizTablero.Length; i++)
@@ -35,6 +47,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             calularTodo();
         }
 
+<<<<<<< HEAD
         public Tablero(Pieza[][] mt, string t)
         {
             this.matrizTablero = mt;
@@ -58,6 +71,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             calularTodo();
         }
 
+=======
+        /// <summary>
+        /// Colocar las fichas del estado inicial del tablero.
+        /// </summary>
+>>>>>>> origin/master
         private void colocarFichas()
         {
             
@@ -101,9 +119,18 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary>
+        /// Busca una jugada para la ficha en la posicion f y c del turno actual. 
+        /// </summary>
+        /// <param name="f">fila</param>
+        /// <param name="c">columna</param>
+        /// <param name="turno">turno actual</param>
+        /// <param name="bandera">no se usa</param>
+>>>>>>> origin/master
         public void buscarJugada(int f, int c, string turno, bool bandera)
         {
-
             //aqui se genrara las cordenadas con los movimientos de la ficha.
             this.turno = turno;
             if (matrizTablero[f][c].color.Equals(turno))
@@ -112,6 +139,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             }
         }
 
+        /// <summary>
+        /// Mueve una pieza a la posicion vacia a la que se le indique. Siempre y cuando sea valida
+        /// </summary>
+        /// <param name="fm">fila de la posicion vacia</param>
+        /// <param name="cm">columna de la posicion vacia</param>
+        /// <param name="f">fila de la pieza a mover</param>
+        /// <param name="c">columna de la pieza a mover</param>
         public void moverPieza(int fm, int cm, int f, int c)
         {
             if (matrizTablero[f][c].verificarMovida(fm, cm))
@@ -122,6 +156,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             }
         }
 
+        /// <summary>
+        /// Come una pieza a la posicion vacia a la que se le indique. Siempre y cuando sea valida
+        /// </summary>
+        /// <param name="fm">fila de la posicion de la comida</param>
+        /// <param name="cm">columna de la posicion de la comida</param>
+        /// <param name="f">fila de la pieza que come</param>
+        /// <param name="c">columna de la pieza que come</param>
         public void comerPieza(int fm, int cm, int f, int c)
         {
             Pieza piezaSeleccionada = matrizTablero[f][c];
@@ -129,6 +170,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             matrizTablero[fm][cm] = piezaSeleccionada;
         }
 
+        /// <summary>
+        /// Print del tablero actual
+        /// </summary>
+        /// <returns>String con el tablero</returns>
         public string print() {
             string res = "\n";
             foreach (Pieza[] p in matrizTablero) {
@@ -152,6 +197,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             return res;
         }
 
+        /// <summary>
+        /// Print del tablero para los arboles
+        /// </summary>
+        /// <param name="spaces">tabs de impresion</param>
+        /// <returns>String con el tablero</returns>
         public string print2(string spaces)
         {
             string res = "\n";
@@ -179,6 +229,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             return res;
         }
 
+        /// <summary>
+        /// Calcular el valor de la Heuristica del tablero
+        /// </summary>
         public void calularTodo()
         {
             valorB = 0;
@@ -204,6 +257,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             valorT = valorB - valorN;
         }
 
+        /// <summary>
+        /// Actualizar el valor de la Heuristica del tablero
+        /// </summary>
         public void actualizarTodo()
         {
             valorB = 0;
@@ -229,6 +285,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             valorT = valorB - valorN;
         }
 
+        /// <summary>
+        /// Calcula el valor de la pieza seleccionada en el tablero
+        /// </summary>
+        /// <param name="f">fila de la pieza seleccionada</param>
+        /// <param name="c">columna de la pieza seleccionada</param>
         public void calularSeleccionada(int f, int c)
         {
             for(int i = 0; i < matrizTablero.Length; i++)
