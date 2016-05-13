@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
 {
+    /// <summary>
+    /// Clase abstarcta para las piezas
+    /// </summary>
     abstract class Pieza
     {
         public string color { get; set; }
