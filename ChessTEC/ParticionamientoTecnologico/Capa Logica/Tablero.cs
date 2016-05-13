@@ -50,6 +50,29 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             calularTodo();
         }
 
+        public Tablero(Pieza[][] mt, string t)
+        {
+            this.matrizTablero = mt;
+            this.turno = turno;
+            valorS = 0;
+            valorB = 0;
+            valorN = 0;
+            valorT = 0;
+
+            for (int x = 0; x < matrizTablero.Length; x++)
+            {
+                for (int y = 0; y < matrizTablero[x].Length; y++)
+                {
+                    if (matrizTablero[x][y] != null && matrizTablero[x][y].color == turno)
+                    {
+                        matrizTablero[x][y].actualizarMov(x, y, this);
+                    }
+                }
+            }
+
+            calularTodo();
+        }
+
         /// <summary>
         /// Colocar las fichas del estado inicial del tablero.
         /// </summary>
@@ -279,5 +302,4 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             }
         }
     }
-
 }
