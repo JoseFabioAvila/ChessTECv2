@@ -47,7 +47,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             calularTodo();
         }
 
-<<<<<<< HEAD
         public Tablero(Pieza[][] mt, string t)
         {
             this.matrizTablero = mt;
@@ -71,11 +70,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             calularTodo();
         }
 
-=======
         /// <summary>
         /// Colocar las fichas del estado inicial del tablero.
         /// </summary>
->>>>>>> origin/master
         private void colocarFichas()
         {
             
@@ -119,8 +116,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             
         }
 
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Busca una jugada para la ficha en la posicion f y c del turno actual. 
         /// </summary>
@@ -128,7 +123,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
         /// <param name="c">columna</param>
         /// <param name="turno">turno actual</param>
         /// <param name="bandera">no se usa</param>
->>>>>>> origin/master
         public void buscarJugada(int f, int c, string turno, bool bandera)
         {
             //aqui se genrara las cordenadas con los movimientos de la ficha.
