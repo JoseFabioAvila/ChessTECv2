@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 {
-    class Arbol
+    class ArbolAli
     {
         public NodoAli raiz { get; set; }
 
         public Tablero tablero { get; set; }
         public string turno { get; set; }
         
-        public Arbol(Tablero tab){
+        public ArbolAli(Tablero tab){
             this.tablero = tab;
             this.turno = tab.turno;
             this.raiz = new NodoAli(tab, "", tab.turno);

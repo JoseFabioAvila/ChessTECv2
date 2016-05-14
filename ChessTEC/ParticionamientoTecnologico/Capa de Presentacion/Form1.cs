@@ -421,7 +421,7 @@ namespace ChessTEC
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            Arbol x = new Arbol(tablero);
+            ArbolAli x = new ArbolAli(tablero);
             x.expandir(x.raiz, 3, 0);
             x.TraverseDFS();
         }

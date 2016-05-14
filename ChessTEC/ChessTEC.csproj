@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Arbol2.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\ArbolAli.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\NodoAli.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\rA-Estrella.cs" />
