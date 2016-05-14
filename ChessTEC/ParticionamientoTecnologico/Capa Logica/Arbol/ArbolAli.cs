@@ -62,7 +62,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                 {
                                     try
                                     {
-                                        tasks[i] = Task.Run(() => crearHijo(t, movilidad, i, x, y, nodo, nivel, cont));
+                                        if (crearHijo(t, movilidad, i, x, y, nodo, nivel, cont))
+                                        {
+                                            tasks[i] = Task.Run(() => crearHijo(t, movilidad, i, x, y, nodo, nivel, cont));
+                                        }
                                     }
                                     catch(Exception e)
                                     {
@@ -100,17 +103,26 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             }
         }
 
-        public void crearHijo(Tablero t, List<int[]> movilidad, int i, int x, int y, NodoAli nodo, int nivel, int cont)
+        public bool crearHijo(Tablero t, List<int[]> movilidad, int i, int x, int y, NodoAli nodo, int nivel, int cont)
         {
-            NodoAli hijo = new NodoAli(t, t.matrizTablero[movilidad.ElementAt(i)[0]][movilidad.ElementAt(i)[1]].simbologia + x.ToString() + y.ToString(), t.turno);
-            hijo.hoja = "No soy Hoja";
-            //Console.WriteLine(hijo.tablero.print());
+            try
+            {
+                NodoAli hijo = new NodoAli(t, t.matrizTablero[movilidad.ElementAt(i)[0]][movilidad.ElementAt(i)[1]].simbologia + x.ToString() + y.ToString(), t.turno);
+                hijo.hoja = "No soy Hoja";
+                //Console.WriteLine(hijo.tablero.print());
 
-            nodo.hijos.Add(hijo);
+                nodo.hijos.Add(hijo);
 
-            Console.WriteLine("Hilo --> " + i);
+                Console.WriteLine("Hilo --> " + i);
 
-            expandir(nodo.hijos.ElementAt(i), nivel, cont);
+                expandir(nodo.hijos.ElementAt(i), nivel, cont);
+
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
         }
 
         private void PrintDFS(NodoAli root, string spaces, int nivel)
