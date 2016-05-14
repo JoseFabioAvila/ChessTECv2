@@ -22,7 +22,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 
         public void expandir(Nodo2 nodo, int nivel, int cont)
         {
-            if (cont < nivel)
+            if (cont <= nivel)
             {
                 for (int x = 0; x < nodo.tablero.matrizTablero.Length; x++)
                 {
@@ -52,6 +52,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                 Nodo2 hijo = new Nodo2(t, t.matrizTablero[movilidad.ElementAt(i)[0]][movilidad.ElementAt(i)[1]].simbologia + x.ToString() + y.ToString(), t.turno);
                                 hijo.hoja = "No soy Hoja";
                                 Console.WriteLine(hijo.tablero.print());
+
                                 nodo.hijos.Add(hijo);
                                 expandir(nodo.hijos.ElementAt(i), nivel, cont);
 
