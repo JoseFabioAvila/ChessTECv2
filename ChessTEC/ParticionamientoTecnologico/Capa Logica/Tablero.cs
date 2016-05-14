@@ -204,15 +204,15 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
                 foreach (Pieza pi in p) {
                     if (pi == null)
                     {
-                        res += "  0   |";
+                        res += "  00   |";
                     }
                     else {
                         if (pi.color.Equals("B"))
                         {
-                            res += "  B  |";
+                            res += "  " + pi.simbologia + "B  |";
                         }
                         else {
-                            res += "  N  |";
+                            res += "  " + pi.simbologia + "N  |";
                         }
                     }
                 }
@@ -241,10 +241,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
                     else {
                         if (pi.color.Equals("B"))
                         {
-                            res += "  B  |";
+                            res += "  "+pi.simbologia+ "B  |";
                         }
                         else {
-                            res += "  N  |";
+                            res += "  " + pi.simbologia + "N  |";
                         }
                     }
                 }
