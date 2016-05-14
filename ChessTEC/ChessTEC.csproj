@@ -47,11 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Arbol.cs" />
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Nodo2.cs" />
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\ArbolAli.cs" />
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\NodoAli.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\rA-Estrella.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\rAmplitudLimitado.cs" />
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Arbol2.cs" />
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Arbol.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Nodo.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Piezas\Alfil.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Piezas\Caballo.cs" />

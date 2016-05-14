@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 {
-    class Nodo2
+    class NodoAli
     {
-        public List<Nodo2> hijos { get; set; }
+        public List<NodoAli> hijos { get; set; }
 
         public string recorrido { get; set; }
 
@@ -19,12 +19,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 
         public string hoja { get; set; }
         
-        public Nodo2(Tablero tab, string recorrido, string turno)
+        public NodoAli(Tablero tab, string recorrido, string turno)
         {
             this.tablero = tab;
             this.recorrido = recorrido;
             this.turno = turno;
-            this.hijos = new List<Nodo2>();
+            this.hijos = new List<NodoAli>();
         }
 
         public void agregarHijo()
