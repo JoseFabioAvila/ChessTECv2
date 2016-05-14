@@ -16,6 +16,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
         public Tablero tablero {get; set; }
 
         public string turno { get; set; }
+
+        public string hoja { get; set; }
         
         public Nodo2(Tablero tab, string recorrido, string turno)
         {

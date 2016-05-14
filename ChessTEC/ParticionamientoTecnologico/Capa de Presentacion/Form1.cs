@@ -423,7 +423,7 @@ namespace ChessTEC
         {
             Arbol x = new Arbol(tablero);
             x.expandir(x.raiz, 3, 0);
-            x.TraverseDFS();
+            //x.TraverseDFS();
         }
     }
 }

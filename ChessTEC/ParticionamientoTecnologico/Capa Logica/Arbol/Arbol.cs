@@ -50,6 +50,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                     t.turno = "B";
                                 }
                                 Nodo2 hijo = new Nodo2(t, t.matrizTablero[movilidad.ElementAt(i)[0]][movilidad.ElementAt(i)[1]].simbologia + x.ToString() + y.ToString(), t.turno);
+                                hijo.hoja = "No soy Hoja";
+                                Console.WriteLine(hijo.tablero.print());
                                 nodo.hijos.Add(hijo);
                                 expandir(nodo.hijos.ElementAt(i), nivel, cont);
 
@@ -61,6 +63,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                     cont++;
                 }
             }
+            else {
+                nodo.hoja = "Soy hoja";
+            }
         }
 
         private void PrintDFS(Nodo2 root, string spaces, int nivel)
@@ -71,6 +76,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                 return;
             }
             Console.WriteLine(spaces + "--> nivel " + nivel.ToString());
+            Console.WriteLine(root.hoja);
             Console.WriteLine(spaces + root.tablero.print2(spaces));
 
             Nodo2 child = null;
@@ -78,7 +84,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             for (int i = 0; i < root.hijos.Count; i++)
             {
                 child = root.hijos.ElementAt(i);
-                Console.WriteLine("--> Hijo: " + i.ToString());
+                Console.WriteLine(spaces + "--> Hijo: " + i.ToString());
                 PrintDFS(child, spaces + "   ", nivel);
             }
             
