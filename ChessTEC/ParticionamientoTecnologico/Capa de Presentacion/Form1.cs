@@ -1,5 +1,6 @@
 ﻿using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios;
 using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol;
+using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -390,7 +391,7 @@ namespace ChessTEC
                 }
             }
         }
-
+        
         /// <summary>
         /// Accion click de turno (no se usa)
         /// </summary>
@@ -424,6 +425,16 @@ namespace ChessTEC
             ArbolAli x = new ArbolAli(tablero);
             x.expandir(x.raiz, 3, 0);
             //x.TraverseDFS();
+        }
+
+        /// <summary>
+        /// Click para ver el arbol a* en consola
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnAstrella_Click(object sender, EventArgs e)
+        {
+            Arbol x = new Arbol(tablero);
         }
     }
 }

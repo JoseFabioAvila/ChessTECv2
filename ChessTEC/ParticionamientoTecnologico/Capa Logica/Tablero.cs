@@ -10,7 +10,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
     /// <summary>
     /// Clase del tablero
     /// </summary>
-    class Tablero
+    class Tablero : ICloneable
     {
         /// <summary>
         /// Matriz del tablero.
@@ -50,13 +50,17 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             calularTodo();
         }
 
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
+
         public Tablero(Pieza[][] mt, string t)
         {
+            //matrizTablero = (Pieza[][])mt.Clone();
             matrizTablero = new Pieza[8][];
             for (int i = 0; i < matrizTablero.Length; i++)
             {
-                //Console.WriteLine(i.ToString());
-
                 matrizTablero[i] = new Pieza[8];
                 matrizTablero[i][0] = mt[i][0];
                 matrizTablero[i][1] = mt[i][1];
@@ -67,6 +71,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
                 matrizTablero[i][6] = mt[i][6];
                 matrizTablero[i][7] = mt[i][7];
             }
+
             //this.matrizTablero = mt;
             this.turno = t.ToString();
             valorS = 0;

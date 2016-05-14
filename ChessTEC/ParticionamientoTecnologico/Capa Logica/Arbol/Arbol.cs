@@ -16,8 +16,18 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 
         public Arbol(Tablero tablero)
         {
-            Nodo raiz = new Nodo(tablero, "", tablero.turno);
+            Nodo raiz = new Nodo(tablero, "", turnoAc(tablero),0);
             List<Nodo> hijosRaiz = raiz.expandir();
+            Console.WriteLine(hijosRaiz.Count);
+        }
+
+        private string turnoAc(Tablero t)
+        {
+            if (t.turno.Equals("B"))
+            {
+                return "N";
+            }
+            return "B";
         }
     }
 }

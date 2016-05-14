@@ -10,7 +10,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
     /// <summary>
     /// Clase abstarcta para las piezas
     /// </summary>
-    abstract class Pieza
+    abstract class Pieza : ICloneable
     {
         public string color { get; set; }
         public double valor { get; set; }
@@ -19,8 +19,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
         public List<int[]> piezasComibles { get; set; }
 
 
-        public string imagen = @"C:\Users\Jeudrin\Documents\GitHub\ChessTECv2\ChessTEC\Recursos\";
-        //public string imagen = @"C:\Users\sejol\Documents\GitHub\ChessTECv2\ChessTEC\Recursos\";
+        //public string imagen = @"C:\Users\Jeudrin\Documents\GitHub\ChessTECv2\ChessTEC\Recursos\";
+        public string imagen = @"C:\Users\sejol\Documents\GitHub\ChessTECv2\ChessTEC\Recursos\";
         //public string imagen = @"C:\Users\fabio\Desktop\ChessTEC\ChessTEC\Recursos\";
 
         public abstract void calcularValor(int fila, int columna, Tablero tablero);
@@ -37,9 +37,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
             return false;
         }
 
-        internal void hacerNulo()
+        public object Clone()
         {
-            throw new NotImplementedException();
+            return this.MemberwiseClone();
         }
     }
 }
