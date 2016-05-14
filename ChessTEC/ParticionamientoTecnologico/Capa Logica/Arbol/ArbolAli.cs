@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
@@ -30,12 +31,15 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                     {
                         if (nodo.tablero.matrizTablero[x][y] != null && nodo.tablero.matrizTablero[x][y].color == nodo.turno)
                         {
-                            nodo.tablero.buscarJugada(x, y, turno, true);
+                            nodo.tablero.buscarJugada(x, y, nodo.turno, true);
+
                             List<int[]> movilidad = nodo.tablero.matrizTablero[x][y].movilidad;
+
+                            Task[] tasks = new Task[movilidad.Count];
 
                             for (int i = 0; i < movilidad.Count; i++)
                             {
-                                bool funcionono = true;
+                                bool funciono = true;
                                 Tablero t = new Tablero(nodo.tablero.matrizTablero, tablero.turno);
                                 ////////////////////////////////////
                                 //por aqui ira el proceso multicore
@@ -44,7 +48,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                     t.moverPieza(movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1], x, y);
                                 }
                                 catch (Exception e){
-                                    funcionono = false;
+                                    funciono = false;
                                 }
 
                                 if (t.turno.Equals("B"))
@@ -54,27 +58,59 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                 else {
                                     t.turno = "B";
                                 }
-                                if (funcionono)
+                                if (funciono)
                                 {
+                                    try
+                                    {
+                                        tasks[i] = Task.Run(() => crearHijo(t, movilidad, i, x, y, nodo, nivel, cont));
+                                    }
+                                    catch(Exception e)
+                                    {
+                                        
+                                    }
+                                    
+                                    /*
                                     NodoAli hijo = new NodoAli(t, t.matrizTablero[movilidad.ElementAt(i)[0]][movilidad.ElementAt(i)[1]].simbologia + x.ToString() + y.ToString(), t.turno);
                                     hijo.hoja = "No soy Hoja";
                                     //Console.WriteLine(hijo.tablero.print());
 
                                     nodo.hijos.Add(hijo);
                                     expandir(nodo.hijos.ElementAt(i), nivel, cont);
+                                     */
 
                                     //t = new Tablero(nodo.tablero.matrizTablero, tablero.turno);
                                     ////////////////////////////////////
                                 }
+                            }
+                            try
+                            {
+                                Task.WaitAll(tasks);
+                            }
+                            catch (AggregateException ae)
+                            {
                             }
                         }
                     }
                     cont++;
                 }
             }
-            else {
+            else 
+            {
                 nodo.hoja = "Soy hoja";
             }
+        }
+
+        public void crearHijo(Tablero t, List<int[]> movilidad, int i, int x, int y, NodoAli nodo, int nivel, int cont)
+        {
+            NodoAli hijo = new NodoAli(t, t.matrizTablero[movilidad.ElementAt(i)[0]][movilidad.ElementAt(i)[1]].simbologia + x.ToString() + y.ToString(), t.turno);
+            hijo.hoja = "No soy Hoja";
+            //Console.WriteLine(hijo.tablero.print());
+
+            nodo.hijos.Add(hijo);
+
+            Console.WriteLine("Hilo --> " + i);
+
+            expandir(nodo.hijos.ElementAt(i), nivel, cont);
         }
 
         private void PrintDFS(NodoAli root, string spaces, int nivel)
@@ -95,11 +131,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                 child = root.hijos.ElementAt(i);
                 Console.WriteLine(spaces + "--> Hijo: " + i.ToString());
                 PrintDFS(child, spaces + "   ", nivel);
-            }
-            
+            }            
         }
-
-
+        
         /// <summary>Traverses and prints the tree in
         /// Depth-First Search (DFS) manner</summary>
         public void TraverseDFS()
@@ -107,7 +141,5 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             Console.WriteLine("--> root");
             this.PrintDFS(raiz, string.Empty, 0);
         }
-
-        
     }
 }
