@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Arbol2.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\ArbolAli.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\NodoAli.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\rA-Estrella.cs" />
@@ -68,6 +67,7 @@
     <Compile Include="ParticionamientoTecnologico\Capa de Presentacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Utilidades\Traductor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ParticionamientoTecnologico\Capa de Presentacion\Form1.resx">

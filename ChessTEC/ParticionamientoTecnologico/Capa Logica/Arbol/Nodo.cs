@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Utilidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,64 +9,82 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 {
     class Nodo
     {
-        // Contains the value of the node
-        public Tablero value { get; set; }
+        public Tablero tablero { get; set; }
+        public string recorrido { get; set; }
+        public int profundidad { get; set; }
+        public string turno { get; set; }
 
-        // Shows whether the current node has a parent or not
-        public bool hasParent { get; set;  }
+        public List<Nodo> hijos { get; set; }
 
-        // Contains the children of the node (zero or more)
-        public List<Nodo> children { get; set; }
+        Traductor traductor = new Traductor();
 
-
-
-        /// <summary>Constructs a tree node</summary>
-        /// <param name="value">the value of the node</param>
-        public Nodo(Tablero value)
+        public Nodo(Tablero tab, string recorrido, string turno,int prof)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(
-                    "Cannot insert null value!");
-            }
-            this.value = value;
-            this.children = new List<Nodo>();
+            this.tablero = tab;
+            this.recorrido = recorrido;
+            this.turno = turno;
+            this.profundidad = prof;
+            hijos = new List<Nodo>();
         }
 
-        /// <summary>The number of node's children</summary>
-        public int ChildrenCount()
+        public List<Nodo> expandir()
         {
-            return this.children.Count;
+            profundidad ++;
+            for (int x = 0; x < tablero.matrizTablero.Length; x++)
+            {
+                for (int y = 0; y < tablero.matrizTablero[x].Length; y++) // Recorrer todo el arbol
+                {
+                    if (tablero.matrizTablero[x][y] != null && 
+                        tablero.matrizTablero[x][y].color == this.turno) // Pieza del bando jugando
+                    {
+                        //tablero.buscarJugada(x, y, turno, true);
+                        
+                        List<Nodo> nodosMovilidad = new List<Nodo>();
+                        List<int[]> movilidad = new List<int[]>(tablero.matrizTablero[x][y].movilidad);
+                        int c = (tablero.matrizTablero[x][y].movilidad.Count);
+                        for (int i = 0; i < c; i++)
+                        {
+                            bool funcionono = true;
+                            Tablero t = new Tablero(tablero.matrizTablero, tablero.turno);
+                            //Tablero t = (Tablero)tablero.Clone();
+                            try
+                            {
+                                t.moverPieza(movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1], x, y);
+                                t.calularTodo();
+                            }
+                            catch (Exception e)
+                            {
+                                funcionono = false;
+                            }
+
+                            if (t.turno.Equals("B"))
+                                t.turno = "N";
+                            else 
+                                t.turno = "B";
+
+                            if (funcionono)
+                            {
+                                Nodo nuevoNodo = new Nodo(t, this.recorrido + " "+ profundidad + ". " + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1]), t.turno, profundidad);
+                                nodosMovilidad.Add(nuevoNodo);
+                            }
+                        }
+                        if(tablero.matrizTablero[x][y].movilidad.Count != 0)
+                            hijos.Add(poda(nodosMovilidad));
+                    }
+                }
+            }
+            return hijos;
         }
 
-        /// <summary>Adds child to the node</summary>
-        /// <param name="child">the child to be added</param>
-        public void AddChild(Nodo child)
+        private Nodo poda(List<Nodo> nodosMovilidad)
         {
-            if (child == null)
+            Nodo mejorMovida = nodosMovilidad.ElementAt(0);
+            for (int i = 1; i < nodosMovilidad.Count; i++)
             {
-                throw new ArgumentNullException(
-                    "Cannot insert null value!");
+                if (nodosMovilidad.ElementAt(i).tablero.valorT >= mejorMovida.tablero.valorT)
+                    mejorMovida = nodosMovilidad.ElementAt(i);
             }
-
-            if (child.hasParent)
-            {
-                throw new ArgumentException(
-                    "The node already has a parent!");
-            }
-
-            child.hasParent = true;
-            this.children.Add(child);
-        }
-
-        /// <summary>
-        /// Gets the child of the node at given index
-        /// </summary>
-        /// <param name="index">the index of the desired child</param>
-        /// <returns>the child on the given position</returns>
-        public Nodo GetChild(int index)
-        {
-            return this.children[index];
+            return mejorMovida;
         }
     }
 }
