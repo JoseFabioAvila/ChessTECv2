@@ -9,6 +9,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 {
     class rAmplitudLimitado
     {
+<<<<<<< HEAD
+        public int MyProperty { get; set; }
+=======
         public Tablero raiz { get; set; }
         public string turno { get; set; }
         public List<Nodo2> movimientos { get; set; }
@@ -20,5 +23,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
             this.turno = r.turno;
             this.raiz2 = new Nodo2(r, "", "B");
         } 
+>>>>>>> origin/master
     }
 }
