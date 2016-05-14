@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Utilidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,64 +9,67 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 {
     class Nodo
     {
-        // Contains the value of the node
-        public Tablero value { get; set; }
+        public Tablero tablero { get; set; }
+        public string recorrido { get; set; }
+        public int profundidad { get; set; }
+        public string turno { get; set; }
+        public List<Nodo> hijos { get; set; }
 
-        // Shows whether the current node has a parent or not
-        public bool hasParent { get; set;  }
+        Traductor traductor = new Traductor();
 
-        // Contains the children of the node (zero or more)
-        public List<Nodo> children { get; set; }
-
-
-
-        /// <summary>Constructs a tree node</summary>
-        /// <param name="value">the value of the node</param>
-        public Nodo(Tablero value)
+        public Nodo(Tablero tab, string recorrido, string turno,int prof)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(
-                    "Cannot insert null value!");
-            }
-            this.value = value;
-            this.children = new List<Nodo>();
+            this.tablero = tab;
+            this.recorrido = recorrido;
+            this.turno = turno;
+            this.profundidad = prof;
         }
 
-        /// <summary>The number of node's children</summary>
-        public int ChildrenCount()
+        public List<Nodo> expandir()
         {
-            return this.children.Count;
-        }
-
-        /// <summary>Adds child to the node</summary>
-        /// <param name="child">the child to be added</param>
-        public void AddChild(Nodo child)
-        {
-            if (child == null)
+            for (int x = 0; x < tablero.matrizTablero.Length; x++)
             {
-                throw new ArgumentNullException(
-                    "Cannot insert null value!");
+                for (int y = 0; y < tablero.matrizTablero[x].Length; y++) // Recorrer todo el arbol
+                {
+                    if (tablero.matrizTablero[x][y] != null && 
+                        tablero.matrizTablero[x][y].color == this.turno) // Pieza del bando jugando
+                    {
+                        tablero.buscarJugada(x, y, turno, true);
+                        List<int[]> movilidad = tablero.matrizTablero[x][y].movilidad; // Movidas de la pieza
+
+                        for (int i = 0; i < movilidad.Count; i++)
+                        {
+                            bool funcionono = true;
+                            Tablero t = new Tablero(tablero.matrizTablero, tablero.turno);
+
+                            try
+                            {
+                                t.moverPieza(movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1], x, y);
+                            }
+                            catch (Exception e)
+                            {
+                                funcionono = false;
+                            }
+
+                            if (t.turno.Equals("B"))
+                                t.turno = "N";
+                            else 
+                                t.turno = "B";
+
+                            if (funcionono)
+                            {
+                                Nodo hijo = new Nodo(
+                                    t, 
+                                    this.recorrido + " -> " + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[1], movilidad.ElementAt(i)[0]), 
+                                    t.turno,
+                                    profundidad++);
+                                hijos.Add(hijo);
+                            }
+                        }
+                    }
+                }
             }
-
-            if (child.hasParent)
-            {
-                throw new ArgumentException(
-                    "The node already has a parent!");
-            }
-
-            child.hasParent = true;
-            this.children.Add(child);
-        }
-
-        /// <summary>
-        /// Gets the child of the node at given index
-        /// </summary>
-        /// <param name="index">the index of the desired child</param>
-        /// <returns>the child on the given position</returns>
-        public Nodo GetChild(int index)
-        {
-            return this.children[index];
+            return hijos;
         }
     }
 }
