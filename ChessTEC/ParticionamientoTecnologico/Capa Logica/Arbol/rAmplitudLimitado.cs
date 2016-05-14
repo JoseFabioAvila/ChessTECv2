@@ -8,5 +8,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 {
     class rAmplitudLimitado
     {
+        public int MyProperty { get; set; }
     }
 }

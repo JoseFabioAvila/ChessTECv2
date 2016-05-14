@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 {
-    class Recorrido
+    class Arbol2
     {
-        public Tablero tablero { get; set; }
-        public List<Tablero> recorrido { get; set; }
-
+        
     }
 }
