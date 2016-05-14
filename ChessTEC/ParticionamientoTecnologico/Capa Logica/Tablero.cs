@@ -160,12 +160,24 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
         /// <param name="c">columna de la pieza a mover</param>
         public void moverPieza(int fm, int cm, int f, int c)
         {
+            /*if (f >= 0 && f < 8)
+            {
+                if (c >= 0 && c < 8)
+                {
+                    if (fm >= 0 && fm < 8)
+                    {
+                        if (cm >= 0 && cm < 8)
+                        {*/
             if (matrizTablero[f][c].verificarMovida(fm, cm))
             {
                 Pieza piezaSeleccionada = matrizTablero[f][c];
                 matrizTablero[f][c] = null;
                 matrizTablero[fm][cm] = piezaSeleccionada;
             }
+                        /*}
+                    }
+                }
+            }*/               
         }
 
         /// <summary>
