@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
 {
+    /// <summary>
+    /// Clase abstarcta para las piezas
+    /// </summary>
     abstract class Pieza
     {
         public string color { get; set; }
@@ -16,8 +19,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios
         public List<int[]> piezasComibles { get; set; }
 
 
-        //public string imagen = @"C:\Users\Jeudrin\Documents\GitHub\ChessTECv2\ChessTEC\Recursos\";
-        public string imagen = @"C:\Users\sejol\Documents\GitHub\ChessTECv2\ChessTEC\Recursos\";
+        public string imagen = @"C:\Users\Jeudrin\Documents\GitHub\ChessTECv2\ChessTEC\Recursos\";
+        //public string imagen = @"C:\Users\sejol\Documents\GitHub\ChessTECv2\ChessTEC\Recursos\";
         //public string imagen = @"C:\Users\fabio\Desktop\ChessTEC\ChessTEC\Recursos\";
 
         public abstract void calcularValor(int fila, int columna, Tablero tablero);

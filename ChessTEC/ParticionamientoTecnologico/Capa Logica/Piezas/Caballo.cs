@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 {
+    /// <summary>
+    /// Clase de la pieza Caballo
+    /// </summary>
     class Caballo : Pieza
     {
+        /// <summary>
+        /// Constructor de la clase caballo
+        /// </summary>
+        /// <param name="jugador">Si es blanco(B) o si es negro(N)</param>
         public Caballo(string jugador)
         {
             movilidad = new List<int[]>();
@@ -26,6 +33,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             this.valor = (double)3;
         }
 
+        /// <summary>
+        /// Calcula el valor del caballo
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void calcularValor(int fila, int columna, Tablero tablero)
         {
             this.valor = (double)3 +
@@ -33,6 +46,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 (defensa(fila, columna, tablero) * 0.05);
         }
 
+        /// <summary>
+        /// Verifica si el Caballo esta defendiendo
+        /// </summary>
+        /// <param name="fila">fila del Caballo</param>
+        /// <param name="columna">clumna del Caballo</param>
+        /// <param name="tablero">Tablero de juego</param>
+        /// <returns>valor de la defensa del Caballo</returns>
         private double defensa(int fila, int columna, Tablero tablero)
         {
             double counter = 0.0;
@@ -53,6 +73,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             return counter;
         }
 
+        /// <summary>
+        /// Actualizar la listas de movilidad y piezasComibles.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void actualizarMov(int fila, int columna, Tablero tablero)
         {
             movilidad.Clear();
@@ -60,6 +86,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             avanzar(fila, columna, tablero);
         }
 
+        /// <summary>
+        /// Busca toda las movidas y comidas posibles del Cabalo.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         private void avanzar(int fila, int columna, Tablero tablero)
         {
             // fila + 2 / col +-1
@@ -112,6 +144,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             }
         }
 
+        /// <summary>
+        /// Auxiliar de avanzar 
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="colnm">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         private void checkAdd(int fila, int colnm, Tablero tablero)
         {
             int[] mov = new int[] { fila, colnm };

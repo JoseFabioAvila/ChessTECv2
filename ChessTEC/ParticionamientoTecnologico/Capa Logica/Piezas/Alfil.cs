@@ -7,8 +7,15 @@ using System.Drawing;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 {
+    /// <summary>
+    /// Clase de pieza Alfil
+    /// </summary>
     class Alfil : Pieza
     {
+        /// <summary>
+        /// Constructor de la pieza alfil
+        /// </summary>
+        /// <param name="jugador">Si es blanco(B) o si es negro(N)</param>
         public Alfil(string jugador)
         {
             movilidad = new List<int[]>();
@@ -26,6 +33,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             this.valor = (double)3;
         }
 
+        /// <summary>
+        /// Calcula el valor de la torre
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void calcularValor(int fila, int columna, Tablero tablero)
         {
             this.valor = (double)3 +
@@ -34,6 +47,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 parejaAlfiles(tablero);
         }
 
+        /// <summary>
+        /// Verifica si existen los dos alfiles en el tablero
+        /// </summary>
+        /// <param name="tablero">Tablero de juego</param>
+        /// <returns>valor de la existencia de los dos alfiles</returns>
         private double parejaAlfiles(Tablero tablero)
         {
             double counter = 0.0;
@@ -54,6 +72,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             return counter;
         }
 
+        /// <summary>
+        /// Verifica si el Alfil esta defendiendo
+        /// </summary>
+        /// <param name="fila">fila del alfil</param>
+        /// <param name="columna">clumna del alfil</param>
+        /// <param name="tablero">Tablero de juego</param>
+        /// <returns>valor de la defensa del alfil</returns>
         private double defensa(int fila, int columna, Tablero tablero)
         {
             double counter = 0.0;
@@ -74,6 +99,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             return counter;
         }
 
+        /// <summary>
+        /// Actualizar la listas de movilidad y piezasComibles.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void actualizarMov(int fila, int columna, Tablero tablero)
         {
             movilidad.Clear();
@@ -81,6 +112,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             avanzar(fila, columna, tablero);
         }
 
+        /// <summary>
+        /// Busca toda las movidas y comidas posibles del alfil.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         private void avanzar(int fila, int columna, Tablero tablero)
         {
             bool noroeste = false, noreste = false, suroeste = false, sureste = false, primera = true;

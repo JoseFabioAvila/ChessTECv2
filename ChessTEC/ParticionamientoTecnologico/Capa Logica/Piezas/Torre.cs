@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 {
+    /// <summary>
+    /// Clase de Pieza Torre
+    /// </summary>
     class Torre : Pieza
     {
+        /// <summary>
+        /// Constructor de la pieza torre
+        /// </summary>
+        /// <param name="jugador">Si es blanco(B) o si es negro(N)</param>
         public Torre(string jugador)
         {
             movilidad = new List<int[]>();
@@ -26,6 +33,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             this.valor = (double)5;
         }
 
+        /// <summary>
+        /// Calcula el valor de la torre.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void calcularValor(int fila, int columna, Tablero tablero)
         {
             this.valor = (double)5 +
@@ -33,6 +46,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 (defensa(fila, columna, tablero) * 0.05);
         }
 
+        /// <summary>
+        /// Aumenta el valor de la torre en virtud de la cantidad de piezas que la estan apoyando.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
+        /// <returns>valor de la defensa</returns>
         private double defensa(int fila, int columna, Tablero tablero)
         {
             double counter = 0.0;
@@ -53,6 +73,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             return counter;
         }
 
+        /// <summary>
+        /// Actualizar la listas de movilidad y piezasComibles.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void actualizarMov(int fila, int columna, Tablero tablero)
         {
             movilidad.Clear();
@@ -60,6 +86,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             avanzar(fila, columna, tablero);
         }
 
+        /// <summary>
+        /// Busca toda las movidas y comidas posibles de la torre.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         private void avanzar(int fila, int columna, Tablero tablero)
         {
             bool arriba = false, abajo = false, derecha = false, izquierda = false, primera = true;
@@ -142,60 +174,5 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 }
             }
         }
-
-        //private void avanzar(int fila, int tempF, int tempF2, int columna, int posIni, Tablero tablero)
-        //{
-        //    //if (tablero.matrizTablero[tempF][columna] == null) // Avanzar
-        //    //{
-        //    //    int[] mov = new int[] { tempF, columna };
-        //    //    movilidad.Add(mov);
-
-        //    //    if (fila == posIni)
-        //    //    {
-        //    //        if (tablero.matrizTablero[tempF2][columna] == null)
-        //    //        {
-        //    //            mov = new int[] { tempF2, columna };
-        //    //            movilidad.Add(mov);
-        //    //        }
-        //    //    }
-        //    //}
-        //}
-
-
-        private void comerDer(int tempF, int columna, Tablero tablero)
-        {
-            //if (columna + 1 < 8)
-            //{
-            //    if (tablero.matrizTablero[tempF][columna + 1] != null) // Comer der
-            //    {
-            //        if (!tablero.matrizTablero[tempF][columna + 1].color.Equals(this.color)) // Comer
-            //        {
-            //            int[] mov = new int[] { tempF, columna + 1 };
-            //            movilidad.Add(mov);
-            //            piezasComibles.Add(mov);
-            //        }
-            //    }
-            //}
-        }
-
-
-        private void comerIzq(int tempF, int columna, Tablero tablero)
-        {
-            //if (columna - 1 >= 0)
-            //{
-            //    if (tablero.matrizTablero[tempF][columna - 1] != null) // Comer Izq
-            //    {
-            //        if (!tablero.matrizTablero[tempF][columna - 1].color.Equals(this.color)) // Comer
-            //        {
-            //            int[] mov = new int[] { tempF, columna - 1 };
-            //            movilidad.Add(mov);
-            //            piezasComibles.Add(mov);
-            //        }
-            //    }
-            //}
-        }
-
-
-
     }
 }

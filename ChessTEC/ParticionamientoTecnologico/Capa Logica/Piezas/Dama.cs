@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 {
+    /// <summary>
+    /// Clase de la pieza Dama
+    /// </summary>
     class Dama : Pieza
     {
+        /// <summary>
+        /// Constructor de la clase Dama
+        /// </summary>
+        /// <param name="jugador">Si es blanco(B) o si es negro(N)</param>
         public Dama(string jugador)
         {
             movilidad = new List<int[]>();
@@ -26,6 +33,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             this.valor = (double)9;
         }
 
+        /// <summary>
+        /// Calcula el valor de la Dama
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void calcularValor(int fila, int columna, Tablero tablero)
         {
             this.valor = (double)9 +
@@ -33,6 +46,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 (defensa(fila, columna, tablero) * 0.05);
         }
 
+        /// <summary>
+        /// Verifica si la Dama esta defendiendo
+        /// </summary>
+        /// <param name="fila">fila del Dama</param>
+        /// <param name="columna">clumna del Dama</param>
+        /// <param name="tablero">Tablero de juego</param>
+        /// <returns>valor de la defensa del Dama</returns>
         private double defensa(int fila, int columna, Tablero tablero)
         {
             double counter = 0.0;
@@ -53,6 +73,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             return counter;
         }
 
+        /// <summary>
+        /// Actualizar la listas de movilidad y piezasComibles.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         public override void actualizarMov(int fila, int columna, Tablero tablero)
         {
             movilidad.Clear();
@@ -60,6 +86,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
             avanzar(fila, columna, tablero);
         }
 
+        /// <summary>
+        /// Busca toda las movidas y comidas posibles de la Dama.
+        /// </summary>
+        /// <param name="fila">fila de la pieza</param>
+        /// <param name="columna">columna de la pieza</param>
+        /// <param name="tablero">Tablero de juego</param>
         private void avanzar(int fila, int columna, Tablero tablero)
         {
             bool noroeste = false, noreste = false, suroeste = false, sureste = false, primera = true;
