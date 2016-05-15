@@ -58,6 +58,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                             }
                             catch (Exception e)
                             {
+                                e.Message.ToString();
                                 funcionono = false;
                             }
                             

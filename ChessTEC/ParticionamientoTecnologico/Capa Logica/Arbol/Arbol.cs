@@ -14,10 +14,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
         public Nodo majorVariante { get; set; }
         public string turno { get; set; }
         public Nodo raiz { get; set; }
+
         public Arbol(Tablero tablero)
         {
             turno = tablero.turno;
-            expandir(tablero);
+            expandir(tablero,null);
         }
 
         private Nodo analizar(int profLimite)

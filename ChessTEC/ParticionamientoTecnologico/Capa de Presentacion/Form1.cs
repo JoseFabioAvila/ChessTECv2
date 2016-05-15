@@ -1,5 +1,6 @@
 ﻿using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios;
 using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol;
+using ChessTEC.ParticionamientoTecnologico.Capa_de_Presentacion;
 using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol;
 using System;
 using System.Collections.Generic;
@@ -400,6 +401,8 @@ namespace ChessTEC
         private void turno_Click(object sender, EventArgs e)
         {
             turno.Text = "Turno";
+            int algo = CustomMessageBox.Show("", "");
+            Console.WriteLine("Algo " + algo);
         }
 
         /// <summary>
@@ -423,8 +426,8 @@ namespace ChessTEC
         private void button1_Click(object sender, EventArgs e)
         {
             ArbolAli x = new ArbolAli(tablero);
-            x.expandir(x.raiz, 5, 0);
-            x.TraverseDFS();
+            x.expandir(x.raiz, 11, 0);
+            x.TraverseDFS(11);
         }
 
         /// <summary>
@@ -434,7 +437,25 @@ namespace ChessTEC
         /// <param name="e"></param>
         private void btnAstrella_Click(object sender, EventArgs e)
         {
-            Arbol x = new Arbol(tablero);
+            //Arbol x = new Arbol(tablero);
+        }
+
+        /// <summary>
+        /// Your custom message box helper.
+        /// </summary>
+        public static class CustomMessageBox
+        {
+
+
+            public static int Show(string title, string description)
+            {
+                // using construct ensures the resources are freed when form is closed
+                using (var form = new CustomMessageForm(title, description))
+                {
+                    form.ShowDialog();
+                    return form.corona;
+                }
+            }
         }
     }
 }

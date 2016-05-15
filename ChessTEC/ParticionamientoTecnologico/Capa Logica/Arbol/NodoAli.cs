@@ -18,6 +18,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
         public string turno { get; set; }
 
         public string hoja { get; set; }
+
+        public int correccion { get; set; }
         
         public NodoAli(Tablero tab, string recorrido, string turno)
         {
@@ -25,6 +27,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
             this.recorrido = recorrido;
             this.turno = turno;
             this.hijos = new List<NodoAli>();
+            if (turno.Equals("B"))
+            {
+                correccion = 1;
+            }
+            else{
+                correccion = -1;
+            }
         }
 
         public void agregarHijo()

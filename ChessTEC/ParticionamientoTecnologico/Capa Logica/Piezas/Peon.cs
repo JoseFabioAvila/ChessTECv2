@@ -1,9 +1,11 @@
-﻿using System;
+﻿using ChessTEC.ParticionamientoTecnologico.Capa_de_Presentacion;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
 {

@@ -1,4 +1,5 @@
 ﻿using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol;
+using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,13 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 
         public Tablero tablero { get; set; }
         public string turno { get; set; }
-        
+
+        Traductor traductor = new Traductor();
+
         public ArbolAli(Tablero tab){
             this.tablero = tab;
             this.turno = tab.turno;
+            
             this.raiz = new NodoAli(tab, "", tab.turno);
         }
 
@@ -35,7 +39,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                             {
                                 nodo.tablero.buscarJugada(x, y, nodo.turno, true);
 
-                                List<int[]> movilidad = new List<int[]>(tablero.matrizTablero[x][y].movilidad);
+                                List<int[]> movilidad = new List<int[]>(nodo.tablero.matrizTablero[x][y].movilidad);
 
                                 Task[] tasks = new Task[movilidad.Count];
 
@@ -53,10 +57,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                     }
                                     catch (Exception e)
                                     {
+                                        e.Message.ToString();
                                         funciono = false;
                                     }
 
-                                    if (t.turno.Equals("B"))
+                                    if (nodo.tablero.turno.Equals("B"))
                                     {
                                         t.turno = "N";
                                     }
@@ -68,14 +73,14 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                     {
                                         try
                                         {
-                                            if (crearHijo(t, movilidad, i, x, y, nodo, nivel, cont))
-                                            {
+                                            //if (crearHijo(t, movilidad, i, x, y, nodo, nivel, cont))
+                                            //{
                                                 tasks[i] = Task.Run(() => crearHijo(t, movilidad, i, x, y, nodo, nivel, cont));
-                                            }
+                                            //}
                                         }
                                         catch (Exception e)
                                         {
-
+                                            e.Message.ToString();
                                         }
                                     }
                                 }
@@ -85,17 +90,21 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                 }
                                 catch (Exception e)
                                 {
+                                    e.Message.ToString();
                                 }
                             }
                             catch (Exception e)
                             {
-
+                                e.Message.ToString();
                             }
                         }
                     }
                 }
                 //hacer poda
                 nodo.hijos = poda(nodo.hijos);
+                //Console.WriteLine("------------Turno : " + nodo.hijos.ElementAt(0).turno + "------------");
+                //Console.WriteLine("Nivel del profundidad = "+cont);
+                //Console.WriteLine(nodo.hijos.ElementAt(0).tablero.print());
                 expandir(nodo.hijos.ElementAt(0), nivel, cont+1);
             }
             else 
@@ -108,18 +117,19 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
         {
             try
             {
-                NodoAli hijo = new NodoAli(t, t.matrizTablero[movilidad.ElementAt(i)[0]][movilidad.ElementAt(i)[1]].simbologia + x.ToString() + y.ToString(), t.turno);
+                NodoAli hijo = new NodoAli(t, nodo.recorrido +" " + cont + ". " + nodo.tablero.turno + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1]) + " | ", t.turno);
                 hijo.hoja = "No soy Hoja";
                 //Console.WriteLine(hijo.tablero.print());
 
                 nodo.hijos.Add(hijo);
 
-                Console.WriteLine("Hilo --> " + i + " en NIVEL " + cont);
+                //Console.WriteLine("Hilo --> " + i + " en NIVEL " + cont);
 
                 return true;
             }
             catch(Exception e)
             {
+                e.Message.ToString();
                 return false;
             }
         }
@@ -127,10 +137,22 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
         private List<NodoAli> poda(List<NodoAli> nodosMovilidad)
         {
             NodoAli mejorMovida = nodosMovilidad.ElementAt(0);
-            for (int i = 1; i < nodosMovilidad.Count; i++)
+            if(mejorMovida.tablero.turno == "N") {
+                for (int i = 1; i < nodosMovilidad.Count; i++)
+                {
+                    //if ((nodosMovilidad.ElementAt(i).tablero.valorT* nodosMovilidad.ElementAt(i).correccion) >= (mejorMovida.tablero.valorT * mejorMovida.correccion))
+                    if (nodosMovilidad.ElementAt(i).tablero.valorT  >= mejorMovida.tablero.valorT)
+                        mejorMovida = nodosMovilidad.ElementAt(i);
+                }
+            }
+            else
             {
-                if (nodosMovilidad.ElementAt(i).tablero.valorT >= mejorMovida.tablero.valorT)
-                    mejorMovida = nodosMovilidad.ElementAt(i);
+                for (int i = 1; i < nodosMovilidad.Count; i++)
+                {
+                    //if ((nodosMovilidad.ElementAt(i).tablero.valorT* nodosMovilidad.ElementAt(i).correccion) >= (mejorMovida.tablero.valorT * mejorMovida.correccion))
+                    if ((nodosMovilidad.ElementAt(i).tablero.valorT) <= (mejorMovida.tablero.valorT))
+                        mejorMovida = nodosMovilidad.ElementAt(i);
+                }
             }
 
             List<NodoAli> na = new List<NodoAli>();
@@ -139,15 +161,16 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             return na;
         }
 
-        private void PrintDFS(NodoAli root, string spaces, int nivel)
+        private void PrintDFS(NodoAli root, string spaces, int nivel, int mxl)
         {
-            if (raiz == null || nivel == 3)
+            if (raiz == null || nivel == mxl)
             {
                 Console.WriteLine("nulo");
                 return;
             }
             Console.WriteLine(spaces + "--> nivel " + nivel.ToString());
-            Console.WriteLine(root.hoja);
+            Console.WriteLine(spaces+"------------Turno : " + root.tablero.turno + "------------");
+            Console.WriteLine(spaces+"camino: "+root.recorrido);
             Console.WriteLine(spaces + root.tablero.print2(spaces));
 
             NodoAli child = null;
@@ -156,16 +179,16 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             {
                 child = root.hijos.ElementAt(i);
                 Console.WriteLine(spaces + "--> Hijo: " + i.ToString());
-                PrintDFS(child, spaces + "   ", nivel);
+                PrintDFS(child, spaces + "   ", nivel, mxl+1);
             }            
         }
         
         /// <summary>Traverses and prints the tree in
         /// Depth-First Search (DFS) manner</summary>
-        public void TraverseDFS()
+        public void TraverseDFS(int maxlevel)
         {
             Console.WriteLine("--> root");
-            this.PrintDFS(raiz, string.Empty, 0);
+            PrintDFS(raiz, string.Empty, 0, maxlevel);
         }
     }
 }

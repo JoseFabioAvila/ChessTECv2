@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParticionamientoTecnologico\Capa de Presentacion\CustomMessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParticionamientoTecnologico\Capa de Presentacion\CustomMessageForm.Designer.cs">
+      <DependentUpon>CustomMessageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\ArbolAli.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\NodoAli.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\rA-Estrella.cs" />
@@ -70,6 +76,9 @@
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Utilidades\Traductor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ParticionamientoTecnologico\Capa de Presentacion\CustomMessageForm.resx">
+      <DependentUpon>CustomMessageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ParticionamientoTecnologico\Capa de Presentacion\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
