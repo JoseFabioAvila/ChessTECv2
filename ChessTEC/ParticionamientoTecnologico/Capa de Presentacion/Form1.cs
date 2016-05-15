@@ -423,7 +423,7 @@ namespace ChessTEC
         private void button1_Click(object sender, EventArgs e)
         {
             ArbolAli x = new ArbolAli(tablero);
-            x.expandir(x.raiz, 3, 0);
+            x.expandir(x.raiz, 5, 0);
             x.TraverseDFS();
         }
 

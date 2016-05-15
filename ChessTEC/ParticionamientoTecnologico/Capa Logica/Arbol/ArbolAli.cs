@@ -23,7 +23,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 
         public void expandir(NodoAli nodo, int nivel, int cont)
         {
-            if (cont <= nivel)
+            if (cont < nivel)
             {
                 for (int x = 0; x < nodo.tablero.matrizTablero.Length; x++)
                 {
@@ -31,71 +31,72 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                     {
                         if (nodo.tablero.matrizTablero[x][y] != null && nodo.tablero.matrizTablero[x][y].color == nodo.turno)
                         {
-                            nodo.tablero.buscarJugada(x, y, nodo.turno, true);
-
-                            List<int[]> movilidad = nodo.tablero.matrizTablero[x][y].movilidad;
-
-                            Task[] tasks = new Task[movilidad.Count];
-
-                            for (int i = 0; i < movilidad.Count; i++)
-                            {
-                                bool funciono = true;
-                                Tablero t = new Tablero(nodo.tablero.matrizTablero, tablero.turno);
-                                ////////////////////////////////////
-                                //por aqui ira el proceso multicore
-                                ////////////////////////////////////
-                                try {
-                                    t.moverPieza(movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1], x, y);
-                                }
-                                catch (Exception e){
-                                    funciono = false;
-                                }
-
-                                if (t.turno.Equals("B"))
-                                {
-                                    t.turno = "N";
-                                }
-                                else {
-                                    t.turno = "B";
-                                }
-                                if (funciono)
-                                {
-                                    try
-                                    {
-                                        if (crearHijo(t, movilidad, i, x, y, nodo, nivel, cont))
-                                        {
-                                            tasks[i] = Task.Run(() => crearHijo(t, movilidad, i, x, y, nodo, nivel, cont));
-                                        }
-                                    }
-                                    catch(Exception e)
-                                    {
-                                        
-                                    }
-                                    
-                                    /*
-                                    NodoAli hijo = new NodoAli(t, t.matrizTablero[movilidad.ElementAt(i)[0]][movilidad.ElementAt(i)[1]].simbologia + x.ToString() + y.ToString(), t.turno);
-                                    hijo.hoja = "No soy Hoja";
-                                    //Console.WriteLine(hijo.tablero.print());
-
-                                    nodo.hijos.Add(hijo);
-                                    expandir(nodo.hijos.ElementAt(i), nivel, cont);
-                                     */
-
-                                    //t = new Tablero(nodo.tablero.matrizTablero, tablero.turno);
-                                    ////////////////////////////////////
-                                }
-                            }
                             try
                             {
-                                Task.WaitAll(tasks);
+                                nodo.tablero.buscarJugada(x, y, nodo.turno, true);
+
+                                List<int[]> movilidad = new List<int[]>(tablero.matrizTablero[x][y].movilidad);
+
+                                Task[] tasks = new Task[movilidad.Count];
+
+                                int pa = movilidad.Count;
+
+                                for (int i = 0; i < pa; i++)
+                                {
+                                    bool funciono = true;
+                                    Tablero t = new Tablero(nodo.tablero.matrizTablero, tablero.turno);
+
+                                    try
+                                    {
+                                        t.moverPieza(movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1], x, y);
+                                        t.calularTodo();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        funciono = false;
+                                    }
+
+                                    if (t.turno.Equals("B"))
+                                    {
+                                        t.turno = "N";
+                                    }
+                                    else
+                                    {
+                                        t.turno = "B";
+                                    }
+                                    if (funciono)
+                                    {
+                                        try
+                                        {
+                                            if (crearHijo(t, movilidad, i, x, y, nodo, nivel, cont))
+                                            {
+                                                tasks[i] = Task.Run(() => crearHijo(t, movilidad, i, x, y, nodo, nivel, cont));
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+
+                                        }
+                                    }
+                                }
+                                try
+                                {
+                                    Task.WaitAll(tasks);
+                                }
+                                catch (Exception e)
+                                {
+                                }
                             }
-                            catch (AggregateException ae)
+                            catch (Exception e)
                             {
+
                             }
                         }
                     }
-                    cont++;
                 }
+                //hacer poda
+                nodo.hijos = poda(nodo.hijos);
+                expandir(nodo.hijos.ElementAt(0), nivel, cont+1);
             }
             else 
             {
@@ -113,9 +114,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 
                 nodo.hijos.Add(hijo);
 
-                Console.WriteLine("Hilo --> " + i);
-
-                expandir(nodo.hijos.ElementAt(i), nivel, cont);
+                Console.WriteLine("Hilo --> " + i + " en NIVEL " + cont);
 
                 return true;
             }
@@ -123,6 +122,21 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             {
                 return false;
             }
+        }
+
+        private List<NodoAli> poda(List<NodoAli> nodosMovilidad)
+        {
+            NodoAli mejorMovida = nodosMovilidad.ElementAt(0);
+            for (int i = 1; i < nodosMovilidad.Count; i++)
+            {
+                if (nodosMovilidad.ElementAt(i).tablero.valorT >= mejorMovida.tablero.valorT)
+                    mejorMovida = nodosMovilidad.ElementAt(i);
+            }
+
+            List<NodoAli> na = new List<NodoAli>();
+            na.Add(mejorMovida);
+
+            return na;
         }
 
         private void PrintDFS(NodoAli root, string spaces, int nivel)
