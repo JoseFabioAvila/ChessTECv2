@@ -58,6 +58,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Presentacion
             {
                 corona = 3;
             }
+
+            this.Close();
         }
     }
 }

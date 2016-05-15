@@ -27,6 +27,15 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             hijos = new List<Nodo>();
         }
 
+        public Nodo(Nodo nodo)
+        {
+            this.tablero = nodo.tablero;
+            this.recorrido = nodo.recorrido;
+            this.turno = nodo.turno;
+            this.profundidad = nodo.profundidad;
+
+        }
+
         public List<Nodo> expandir()
         {
             profundidad ++;

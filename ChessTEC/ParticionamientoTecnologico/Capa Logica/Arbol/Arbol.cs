@@ -18,56 +18,66 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
         public Arbol(Tablero tablero)
         {
             turno = tablero.turno;
-            expandir(tablero,null);
+            raiz = new Nodo(tablero, "", turnoAc(tablero), 0); // Crear nodo raiz
+            variantes = raiz.expandir();
         }
 
-        private Nodo analizar(int profLimite)
+        public Nodo analizar(int profLimite)
         {
-            Nodo mejorHeuristica;
-            return null;
+            Nodo mejorJugada;
+            do
+            {
+                mejorJugada = variantes.ElementAt(0);
+                int posMejorJugada = 0;
+                for (int i = 1; i < variantes.Count; i++)
+                {
+                    if (turno.Equals("B"))
+                    {
+                        if (variantes.ElementAt(i).tablero.valorT < mejorJugada.tablero.valorT)
+                        {
+                            mejorJugada = variantes.ElementAt(i);
+                            posMejorJugada = i;
+                        }
+                    }
+                    else
+                    {
+                        if (variantes.ElementAt(i).tablero.valorT >= mejorJugada.tablero.valorT)
+                        {
+                            mejorJugada = variantes.ElementAt(i);
+                            posMejorJugada = i;
+                        }
+                    }
+                }
+                variantes.RemoveAt(posMejorJugada);
+                List<Nodo> nuevasVariantes = reemplazar(mejorJugada);
+                variantes = variantes.Concat(nuevasVariantes)
+                                    .ToList();
+            } while (mejorJugada.profundidad < profLimite);
+
+            return mejorJugada;
         }
 
-        public Nodo expandir(Tablero tablero,Nodo nodoAExpandir) {
+        public List<Nodo> reemplazar(Nodo nodoAExpandir) {
 
-            nodoAExpandir = new Nodo(tablero, "", turnoAc(tablero), 0); // Crear nodo raiz
-            List<Nodo> jugadas = nodoAExpandir.expandir(); // juega blanco
-            Nodo mejorMovidaBlanca = jugadas.ElementAt(0);
+            List<Nodo> respuestas = nodoAExpandir.expandir();
+            Nodo mejorRespuesta = respuestas.ElementAt(0);
             if (turno.Equals("B"))
             {
-                for (int i = 1; i < jugadas.Count; i++)
+                for (int i = 1; i < respuestas.Count; i++)
                 {
-                    if (jugadas.ElementAt(i).tablero.valorT >= mejorMovidaBlanca.tablero.valorT)
-                        mejorMovidaBlanca = jugadas.ElementAt(i);
+                    if (respuestas.ElementAt(i).tablero.valorT >= mejorRespuesta.tablero.valorT)
+                        mejorRespuesta = respuestas.ElementAt(i);
                 }
             }
             else
             {
-                for (int i = 1; i < jugadas.Count; i++)
+                for (int i = 1; i < respuestas.Count; i++)
                 {
-                    if (jugadas.ElementAt(i).tablero.valorT < mejorMovidaBlanca.tablero.valorT)
-                        mejorMovidaBlanca = jugadas.ElementAt(i);
+                    if (respuestas.ElementAt(i).tablero.valorT < mejorRespuesta.tablero.valorT)
+                        mejorRespuesta = respuestas.ElementAt(i);
                 }
             }
-            nodoAExpandir = new Nodo(tablero, "", tablero.turno, 0); // Crear nodo raiz
-            List<Nodo> respuestas = nodoAExpandir.expandir(); // juega negro
-            Nodo mejorMovidaNegra = respuestas.ElementAt(0);
-            if (turno.Equals("B"))
-            {
-                for (int i = 1; i < jugadas.Count; i++)
-                {
-                    if (jugadas.ElementAt(i).tablero.valorT >= mejorMovidaBlanca.tablero.valorT)
-                        mejorMovidaBlanca = jugadas.ElementAt(i);
-                }
-            }
-            else
-            {
-                for (int i = 1; i < jugadas.Count; i++)
-                {
-                    if (jugadas.ElementAt(i).tablero.valorT < mejorMovidaBlanca.tablero.valorT)
-                        mejorMovidaBlanca = jugadas.ElementAt(i);
-                }
-            }
-            return mejorMovidaNegra;
+            return mejorRespuesta.expandir();
         }
         
         private string turnoAc(Tablero t)
@@ -77,6 +87,17 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
                 return "N";
             }
             return "B";
+        }
+
+        public void PrintA()
+        {
+            foreach(Nodo n in this.variantes)
+            {
+                Console.WriteLine("\nProfundidad: " + n.profundidad);
+                Console.WriteLine("Turno: " + n.turno);
+                Console.WriteLine(n.recorrido);
+                Console.WriteLine("/*************************************************************/" + "\n");        
+            }
         }
     }
 }

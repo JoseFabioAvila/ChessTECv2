@@ -2,6 +2,7 @@
 using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol;
 using ChessTEC.ParticionamientoTecnologico.Capa_de_Presentacion;
 using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol;
+using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -153,7 +154,7 @@ namespace ChessTEC
         {
             //updateTablero();
             PictureBox btn = (PictureBox)sender;
-            jugar(btn);
+            jugar(btn);            
         }
 
         /// <summary>
@@ -239,7 +240,6 @@ namespace ChessTEC
             /////////////////////////////////////////////////////////////////////
             //turno.Text = "jugada";
             /////////////////////////////////////////////////////////////////////
-
             for (int i = 0; i < matrizBotones.Length; i++)
             {
                 for (int j = 0; j < matrizBotones[i].Length; j++)
@@ -251,9 +251,24 @@ namespace ChessTEC
 
                         fm = i;
                         cm = j;
+
                         tablero.moverPieza(fm, cm, f, c);
                         seleccionado = false;
                         richTextBox1.Text = tablero.print();
+                        
+                        if (turnoDe == "B" && fm == 0)
+                        {
+                            int opcion = CustomMessageBox.Show("", "");
+
+                            coronar(opcion, fm, cm, "player1");
+                        }
+                        else if (turnoDe == "N" && fm == 7)
+                        {
+                            int opcion = CustomMessageBox.Show("", "");
+
+                            coronar(opcion, fm, cm, "player2");                            
+                        }
+
                         updateTablero();
                     }
                 }
@@ -261,6 +276,33 @@ namespace ChessTEC
             tablero.calularTodo();
             textBox1.Text = tablero.valorT.ToString();
             seleccionado = false;
+        }
+
+        /// <summary>
+        /// Método que se encarga de coronar las piezas para ambos jugadores
+        /// </summary>
+        /// <param name="opcion">corona a utilizar</param>
+        /// <param name="fm">fila</param>
+        /// <param name="cm">columna</param>
+        /// <param name="jugardor">jugador actual</param>
+        public void coronar(int opcion, int fm, int cm, string jugardor)
+        {
+            if (opcion == 0)
+            {
+                tablero.matrizTablero[fm][cm] = new Alfil(jugardor);
+            }
+            else if (opcion == 1)
+            {
+                tablero.matrizTablero[fm][cm] = new Dama(jugardor);
+            }
+            else if (opcion == 2)
+            {
+                tablero.matrizTablero[fm][cm] = new Torre(jugardor);
+            }
+            else if (opcion == 3)
+            {
+                tablero.matrizTablero[fm][cm] = new Caballo(jugardor);
+            }
         }
 
         /// <summary>
@@ -365,6 +407,20 @@ namespace ChessTEC
                         tablero.comerPieza(fm, cm, f, c);
                         seleccionado = false;
                         richTextBox1.Text = tablero.print();
+
+                        if (turnoDe == "B" && fm == 0)
+                        {
+                            int opcion = CustomMessageBox.Show("", "");
+
+                            coronar(opcion, fm, cm, "player1");
+                        }
+                        else if (turnoDe == "N" && fm == 7)
+                        {
+                            int opcion = CustomMessageBox.Show("", "");
+
+                            coronar(opcion, fm, cm, "player2");
+                        }
+
                         updateTablero();
                     }
                 }
@@ -400,7 +456,7 @@ namespace ChessTEC
         /// <param name="e"></param>
         private void turno_Click(object sender, EventArgs e)
         {
-            turno.Text = "Turno";
+            //turno.Text = "Turno";
             int algo = CustomMessageBox.Show("", "");
             Console.WriteLine("Algo " + algo);
         }
@@ -437,7 +493,11 @@ namespace ChessTEC
         /// <param name="e"></param>
         private void btnAstrella_Click(object sender, EventArgs e)
         {
-            //Arbol x = new Arbol(tablero);
+            Arbol x = new Arbol(tablero);
+
+            x.analizar(5);
+
+            x.PrintA();
         }
 
         /// <summary>
