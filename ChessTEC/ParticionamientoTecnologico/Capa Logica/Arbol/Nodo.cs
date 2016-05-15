@@ -41,6 +41,8 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                         
                         List<Nodo> nodosMovilidad = new List<Nodo>();
                         List<int[]> movilidad = new List<int[]>(tablero.matrizTablero[x][y].movilidad);
+
+                        Task[] tasks = new Task[movilidad.Count];
                         int c = (tablero.matrizTablero[x][y].movilidad.Count);
                         string fc;
 
