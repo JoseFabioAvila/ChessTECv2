@@ -23,9 +23,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 
         private Nodo analizar(int profLimite)
         {
+            Nodo mejorHeuristica;
             return null;
         }
-
+        
         private string turnoAc(Tablero t)
         {
             if (t.turno.Equals("B"))
