@@ -183,7 +183,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                 case "B":
                     tempF = fila - 1;
                     tempF2 = fila - 2;
-                    posIni = 7;
+                    posIni = 6;
                     break;
                 case "N":
                     tempF = fila + 1;

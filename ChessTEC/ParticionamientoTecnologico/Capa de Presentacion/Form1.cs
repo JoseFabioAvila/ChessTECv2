@@ -256,13 +256,13 @@ namespace ChessTEC
                         seleccionado = false;
                         richTextBox1.Text = tablero.print();
                         
-                        if (turnoDe == "B" && fm == 0)
+                        if (turnoDe == "B" && fm == 0 && tablero.matrizTablero[fm][cm].simbologia == "P")
                         {
                             int opcion = CustomMessageBox.Show("", "");
 
                             coronar(opcion, fm, cm, "player1");
                         }
-                        else if (turnoDe == "N" && fm == 7)
+                        else if (turnoDe == "N" && fm == 7 && tablero.matrizTablero[fm][cm].simbologia == "P")
                         {
                             int opcion = CustomMessageBox.Show("", "");
 
@@ -408,13 +408,13 @@ namespace ChessTEC
                         seleccionado = false;
                         richTextBox1.Text = tablero.print();
 
-                        if (turnoDe == "B" && fm == 0)
+                        if (turnoDe == "B" && fm == 0 && tablero.matrizTablero[fm][cm].simbologia == "P")
                         {
                             int opcion = CustomMessageBox.Show("", "");
 
                             coronar(opcion, fm, cm, "player1");
                         }
-                        else if (turnoDe == "N" && fm == 7)
+                        else if (turnoDe == "N" && fm == 7 && tablero.matrizTablero[fm][cm].simbologia == "P")
                         {
                             int opcion = CustomMessageBox.Show("", "");
 
