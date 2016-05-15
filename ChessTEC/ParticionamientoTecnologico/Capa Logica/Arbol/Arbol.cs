@@ -13,12 +13,17 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
         public List<Nodo> variantes { get; set; }
         public Nodo majorVariante { get; set; }
         public string turno { get; set; }
-
+        public Nodo raiz { get; set; }
         public Arbol(Tablero tablero)
         {
-            Nodo raiz = new Nodo(tablero, "", turnoAc(tablero),0);
+            raiz = new Nodo(tablero, "", turnoAc(tablero),0);
             List<Nodo> hijosRaiz = raiz.expandir();
             Console.WriteLine(hijosRaiz.Count);
+        }
+
+        private Nodo analizar(int profLimite)
+        {
+            return null;
         }
 
         private string turnoAc(Tablero t)

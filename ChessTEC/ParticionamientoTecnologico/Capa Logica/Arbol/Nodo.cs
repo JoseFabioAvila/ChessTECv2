@@ -42,10 +42,12 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                         List<Nodo> nodosMovilidad = new List<Nodo>();
                         List<int[]> movilidad = new List<int[]>(tablero.matrizTablero[x][y].movilidad);
                         int c = (tablero.matrizTablero[x][y].movilidad.Count);
+                        string fc;
+
                         for (int i = 0; i < c; i++)
                         {
                             bool funcionono = true;
-                            Tablero t = new Tablero(tablero.matrizTablero, tablero.turno);
+                            Tablero t = new Tablero(tablero.matrizTablero, turno);
                             //Tablero t = (Tablero)tablero.Clone();
                             try
                             {
@@ -56,33 +58,44 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                             {
                                 funcionono = false;
                             }
-
-                            if (t.turno.Equals("B"))
-                                t.turno = "N";
-                            else 
-                                t.turno = "B";
+                            
+                            if (turno.Equals("B"))
+                                fc = "N";
+                            else
+                                fc = "B";
 
                             if (funcionono)
                             {
-                                Nodo nuevoNodo = new Nodo(t, this.recorrido + " "+ profundidad + ". " + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1]), t.turno, profundidad);
+                                Nodo nuevoNodo = new Nodo(t, this.recorrido + " "+ profundidad + ". " + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1]), fc, profundidad);
                                 nodosMovilidad.Add(nuevoNodo);
                             }
                         }
                         if(tablero.matrizTablero[x][y].movilidad.Count != 0)
-                            hijos.Add(poda(nodosMovilidad));
+                            hijos.Add(poda(nodosMovilidad,turno));
                     }
                 }
             }
             return hijos;
         }
 
-        private Nodo poda(List<Nodo> nodosMovilidad)
+        private Nodo poda(List<Nodo> nodosMovilidad, string turno)
         {
             Nodo mejorMovida = nodosMovilidad.ElementAt(0);
-            for (int i = 1; i < nodosMovilidad.Count; i++)
+            if (turno.Equals("B"))
             {
-                if (nodosMovilidad.ElementAt(i).tablero.valorT >= mejorMovida.tablero.valorT)
-                    mejorMovida = nodosMovilidad.ElementAt(i);
+                for (int i = 1; i < nodosMovilidad.Count; i++)
+                {
+                    if (nodosMovilidad.ElementAt(i).tablero.valorT >= mejorMovida.tablero.valorT)
+                        mejorMovida = nodosMovilidad.ElementAt(i);
+                }
+            }
+            else
+            {
+                for (int i = 1; i < nodosMovilidad.Count; i++)
+                {
+                    if (nodosMovilidad.ElementAt(i).tablero.valorT < mejorMovida.tablero.valorT)
+                        mejorMovida = nodosMovilidad.ElementAt(i);
+                }
             }
             return mejorMovida;
         }
