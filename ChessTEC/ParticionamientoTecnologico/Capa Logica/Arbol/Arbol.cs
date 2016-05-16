@@ -1,7 +1,9 @@
 ﻿using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios;
 using ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol;
+using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,9 +16,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
         public Nodo majorVariante { get; set; }
         public string turno { get; set; }
         public Nodo raiz { get; set; }
+        public Estadisticas estadisticas { get; set; }
 
         public Arbol(Tablero tablero)
         {
+            this.estadisticas = new Estadisticas();
             turno = tablero.turno;
             raiz = new Nodo(tablero, "", turnoAc(tablero), 0); // Crear nodo raiz
             variantes = raiz.expandir();
@@ -24,6 +28,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 
         public Nodo analizar(int profLimite)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             Nodo mejorJugada;
             do
             {
@@ -53,6 +60,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
                 variantes = variantes.Concat(nuevasVariantes)
                                     .ToList();
             } while (mejorJugada.profundidad < profLimite);
+
+            sw.Stop();
+
+            this.estadisticas.tiempo = sw.ElapsedMilliseconds;
+            this.estadisticas.cantJugadasAnalizadas = this.variantes.Count();
 
             return mejorJugada;
         }
@@ -89,15 +101,21 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
             return "B";
         }
 
-        public void PrintA()
+        public String PrintA()
         {
-            foreach(Nodo n in this.variantes)
-            {
-                Console.WriteLine("\nProfundidad: " + n.profundidad);
-                Console.WriteLine("Turno: " + n.turno);
-                Console.WriteLine(n.recorrido);
-                Console.WriteLine("/*************************************************************/" + "\n");        
-            }
+            Nodo n = this.variantes.Last();
+            //Console.WriteLine("\nProfundidad: " + n.profundidad);
+            //Console.WriteLine("Turno: " + n.turno);
+            //Console.WriteLine(n.recorrido);
+            //Console.WriteLine("/*************************************************************/" + "\n");
+            return n.recorrido;
+            //foreach(Nodo n in this.variantes)
+            //{
+            //    Console.WriteLine("\nProfundidad: " + n.profundidad);
+            //    Console.WriteLine("Turno: " + n.turno);
+            //    Console.WriteLine(n.recorrido);
+            //    Console.WriteLine("/*************************************************************/" + "\n");        
+            //}
         }
     }
 }

@@ -2,6 +2,7 @@
 using ChessTEC.ParticionamientoTecnologico.Capa_Logica.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -16,9 +17,14 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
         public Tablero tablero { get; set; }
         public string turno { get; set; }
 
+        public Estadisticas estadisticas { get; set; }
+
         Traductor traductor = new Traductor();
 
-        public ArbolAli(Tablero tab){
+        public ArbolAli(Tablero tab)
+        {
+            this.estadisticas = new Estadisticas();
+
             this.tablero = tab;
             this.turno = tab.turno;
             
@@ -27,6 +33,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 
         public void expandir(NodoAli nodo, int nivel, int cont)
         {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             if (cont < nivel)
             {
                 for (int x = 0; x < nodo.tablero.matrizTablero.Length; x++)
@@ -86,6 +95,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                 }
                                 try
                                 {
+                                    this.estadisticas.cantJugadasAnalizadas += tasks.Length;
                                     Task.WaitAll(tasks);
                                 }
                                 catch (Exception e)
@@ -111,6 +121,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             {
                 nodo.hoja = "Soy hoja";
             }
+
+            sw.Stop();
+
+            this.estadisticas.tiempo = sw.ElapsedMilliseconds;            
         }
 
         public bool crearHijo(Tablero t, List<int[]> movilidad, int i, int x, int y, NodoAli nodo, int nivel, int cont)

@@ -73,6 +73,7 @@
     <Compile Include="ParticionamientoTecnologico\Capa de Presentacion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Utilidades\Estadisticas.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Utilidades\Traductor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

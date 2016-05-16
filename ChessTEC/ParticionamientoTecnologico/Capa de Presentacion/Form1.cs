@@ -36,6 +36,7 @@ namespace ChessTEC
             tablero = new Tablero();
             cargarBotones();
             updateTablero();
+            blanquear();
         }
 
         /// <summary>
@@ -135,11 +136,11 @@ namespace ChessTEC
                     {
                         //Console.WriteLine(tablero.matrizTablero[i][j].imagen);
                         matrizBotones[i][j].ImageLocation = tablero.matrizTablero[i][j].imagen;
-                        matrizBotones[i][j].BackColor = Color.AliceBlue;
+                        //matrizBotones[i][j].BackColor = Color.AliceBlue;
                     }
                     else {
                         matrizBotones[i][j].ImageLocation = "";
-                        matrizBotones[i][j].BackColor = Color.AliceBlue;
+                        //matrizBotones[i][j].BackColor = Color.AliceBlue;
                     }
                 }
             }
@@ -164,6 +165,7 @@ namespace ChessTEC
         /// <param name="btn">boton seleccionado (posicion del tablero)</param>
         private void jugar(PictureBox btn)
         {
+            
             if (seleccionado == true && btn.BackColor == Color.Red)
             {
                 if (turnoDe == "B")
@@ -175,6 +177,7 @@ namespace ChessTEC
                     realizarComida(btn, turnoDe);
                     informarCambioTurno("B");
                 }
+                blanquear();
             }
             else if (seleccionado == false && btn.ImageLocation != "")//btn.BackColor != Color.Yellow)
             {
@@ -247,7 +250,7 @@ namespace ChessTEC
                     if (matrizBotones[i][j].Name == btn.Name)
                     {
                         //turno.Text += "| " + i.ToString() + " | " + j.ToString() + " |";
-                        matrizBotones[i][j].BackColor = Color.AliceBlue;
+                        //matrizBotones[i][j].BackColor = Color.AliceBlue;
 
                         fm = i;
                         cm = j;
@@ -274,7 +277,7 @@ namespace ChessTEC
                 }
             }
             tablero.calularTodo();
-            textBox1.Text = tablero.valorT.ToString();
+            vHeuActual.Text = tablero.valorT.ToString();
             seleccionado = false;
         }
 
@@ -345,7 +348,7 @@ namespace ChessTEC
                         matrizBotones[x[0]][x[1]].BackColor = Color.Red;
                     }
                     tablero.calularSeleccionada(f, c);
-                    textBox1.Text = tablero.valorS.ToString();
+                    vPieza.Text = tablero.valorS.ToString();
                     seleccionado = true;
                 }
             }
@@ -380,7 +383,7 @@ namespace ChessTEC
                         matrizBotones[x[0]][x[1]].BackColor = Color.Red;
                     }
                     tablero.calularSeleccionada(f, c);
-                    textBox1.Text = tablero.valorS.ToString();
+                    vPieza.Text = tablero.valorS.ToString();
                     seleccionado = true;
                 }
             }
@@ -400,7 +403,7 @@ namespace ChessTEC
                     if (matrizBotones[i][j].Name == btn.Name)
                     {
                         //turno.Text = "| " + f.ToString() + " | " + c.ToString() + " |  comer";
-                        matrizBotones[i][j].BackColor = Color.AliceBlue;
+                        //matrizBotones[i][j].BackColor = Color.AliceBlue;
 
                         fm = i;
                         cm = j;
@@ -426,7 +429,7 @@ namespace ChessTEC
                 }
             }
             tablero.calularTodo();
-            textBox1.Text = tablero.valorT.ToString();
+            vHeuActual.Text = tablero.valorT.ToString();
             seleccionado = false;
         }
 
@@ -472,6 +475,45 @@ namespace ChessTEC
                     matrizBotones[i][j].BackColor = Color.AliceBlue;
                 }
             }
+            matrizBotones[0][1].BackColor = Color.DarkGray;
+            matrizBotones[0][3].BackColor = Color.DarkGray;
+            matrizBotones[0][5].BackColor = Color.DarkGray;
+            matrizBotones[0][7].BackColor = Color.DarkGray;
+
+            matrizBotones[1][0].BackColor = Color.DarkGray;
+            matrizBotones[1][2].BackColor = Color.DarkGray;
+            matrizBotones[1][4].BackColor = Color.DarkGray;
+            matrizBotones[1][6].BackColor = Color.DarkGray;
+
+            matrizBotones[2][1].BackColor = Color.DarkGray;
+            matrizBotones[2][3].BackColor = Color.DarkGray;
+            matrizBotones[2][5].BackColor = Color.DarkGray;
+            matrizBotones[2][7].BackColor = Color.DarkGray;
+
+            matrizBotones[3][0].BackColor = Color.DarkGray;
+            matrizBotones[3][2].BackColor = Color.DarkGray;
+            matrizBotones[3][4].BackColor = Color.DarkGray;
+            matrizBotones[3][6].BackColor = Color.DarkGray;
+
+            matrizBotones[4][1].BackColor = Color.DarkGray;
+            matrizBotones[4][3].BackColor = Color.DarkGray;
+            matrizBotones[4][5].BackColor = Color.DarkGray;
+            matrizBotones[4][7].BackColor = Color.DarkGray;
+
+            matrizBotones[5][0].BackColor = Color.DarkGray;
+            matrizBotones[5][2].BackColor = Color.DarkGray;
+            matrizBotones[5][4].BackColor = Color.DarkGray;
+            matrizBotones[5][6].BackColor = Color.DarkGray;
+
+            matrizBotones[6][1].BackColor = Color.DarkGray;
+            matrizBotones[6][3].BackColor = Color.DarkGray;
+            matrizBotones[6][5].BackColor = Color.DarkGray;
+            matrizBotones[6][7].BackColor = Color.DarkGray;
+
+            matrizBotones[7][0].BackColor = Color.DarkGray;
+            matrizBotones[7][2].BackColor = Color.DarkGray;
+            matrizBotones[7][4].BackColor = Color.DarkGray;
+            matrizBotones[7][6].BackColor = Color.DarkGray;
         }
 
         /// <summary>
@@ -482,8 +524,10 @@ namespace ChessTEC
         private void button1_Click(object sender, EventArgs e)
         {
             ArbolAli x = new ArbolAli(tablero);
-            x.expandir(x.raiz, 11, 0);
-            x.TraverseDFS(11);
+            x.expandir(x.raiz, int.Parse(maskedTextBox1.Text), 0);
+            //x.TraverseDFS(11);
+
+            this.lblTiempoA.Text = x.estadisticas.tiempo.ToString() + " ms" + ", " + x.estadisticas.cantJugadasAnalizadas + " jugadas";
         }
 
         /// <summary>
@@ -494,10 +538,11 @@ namespace ChessTEC
         private void btnAstrella_Click(object sender, EventArgs e)
         {
             Arbol x = new Arbol(tablero);
+            Nodo respuesta = x.analizar(int.Parse(maskedTextBox1.Text));
+            vHeuFinal.Text = (respuesta.tablero.valorT).ToString();
+            vRecorrido.Text = respuesta.recorrido;
 
-            x.analizar(5);
-
-            x.PrintA();
+            this.lblTiempoA.Text = x.estadisticas.tiempo.ToString() + " ms" + ", " + x.estadisticas.cantJugadasAnalizadas + " jugadas";
         }
 
         /// <summary>
