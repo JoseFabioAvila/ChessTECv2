@@ -82,25 +82,20 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                     {
                                         try
                                         {
-                                            //if (crearHijo(t, movilidad, i, x, y, nodo, nivel, cont))
-                                            //{
+                                            //if (crearHijo(t, movilidad, i, x, y, nodo, nivel, cont)){
                                                 tasks[i] = Task.Run(() => crearHijo(t, movilidad, i, x, y, nodo, nivel, cont));
-                                            //}
+                                            
+                                            if (!tasks[i].IsFaulted && !tasks[i].IsCanceled)
+                                            {
+                                                this.estadisticas.cantJugadasAnalizadas += tasks.Length;
+                                                tasks[i].Wait();
+                                            }
                                         }
                                         catch (Exception e)
                                         {
                                             e.Message.ToString();
                                         }
                                     }
-                                }
-                                try
-                                {
-                                    this.estadisticas.cantJugadasAnalizadas += tasks.Length;
-                                    Task.WaitAll(tasks);
-                                }
-                                catch (Exception e)
-                                {
-                                    e.Message.ToString();
                                 }
                             }
                             catch (Exception e)
