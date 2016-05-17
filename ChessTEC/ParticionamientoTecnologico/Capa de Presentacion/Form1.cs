@@ -261,13 +261,13 @@ namespace ChessTEC
                         
                         if (turnoDe == "B" && fm == 0 && tablero.matrizTablero[fm][cm].simbologia == "P")
                         {
-                            int opcion = CustomMessageBox.Show("", "");
+                            int opcion = CustomMessageBox.Show();
 
                             coronar(opcion, fm, cm, "player1");
                         }
                         else if (turnoDe == "N" && fm == 7 && tablero.matrizTablero[fm][cm].simbologia == "P")
                         {
-                            int opcion = CustomMessageBox.Show("", "");
+                            int opcion = CustomMessageBox.Show();
 
                             coronar(opcion, fm, cm, "player2");                            
                         }
@@ -413,13 +413,13 @@ namespace ChessTEC
 
                         if (turnoDe == "B" && fm == 0 && tablero.matrizTablero[fm][cm].simbologia == "P")
                         {
-                            int opcion = CustomMessageBox.Show("", "");
+                            int opcion = CustomMessageBox.Show();
 
                             coronar(opcion, fm, cm, "player1");
                         }
                         else if (turnoDe == "N" && fm == 7 && tablero.matrizTablero[fm][cm].simbologia == "P")
                         {
-                            int opcion = CustomMessageBox.Show("", "");
+                            int opcion = CustomMessageBox.Show();
 
                             coronar(opcion, fm, cm, "player2");
                         }
@@ -460,8 +460,6 @@ namespace ChessTEC
         private void turno_Click(object sender, EventArgs e)
         {
             //turno.Text = "Turno";
-            int algo = CustomMessageBox.Show("", "");
-            Console.WriteLine("Algo " + algo);
         }
 
         /// <summary>
@@ -523,10 +521,11 @@ namespace ChessTEC
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            ArbolAli x = new ArbolAli(tablero);
+            ArbolPM x = new ArbolPM(tablero);
             x.expandir(x.raiz, int.Parse(maskedTextBox1.Text), 0);
-            //x.TraverseDFS(11);
 
+            vRecorrido.Text = x.camino;
+            vHeuFinal.Text = (x.valorT).ToString();
             this.lblTiempoA.Text = x.estadisticas.tiempo.ToString() + " ms" + ", " + x.estadisticas.cantJugadasAnalizadas + " jugadas";
         }
 
@@ -537,8 +536,8 @@ namespace ChessTEC
         /// <param name="e"></param>
         private void btnAstrella_Click(object sender, EventArgs e)
         {
-            Arbol x = new Arbol(tablero);
-            Nodo respuesta = x.analizar(int.Parse(maskedTextBox1.Text));
+            ArbolAE x = new ArbolAE(tablero);
+            NodoAE respuesta = x.analizar(int.Parse(maskedTextBox1.Text));
             vHeuFinal.Text = (respuesta.tablero.valorT).ToString();
             vRecorrido.Text = respuesta.recorrido;
 
@@ -552,10 +551,10 @@ namespace ChessTEC
         {
 
 
-            public static int Show(string title, string description)
+            public static int Show()
             {
                 // using construct ensures the resources are freed when form is closed
-                using (var form = new CustomMessageForm(title, description))
+                using (var form = new CustomMessageForm())
                 {
                     form.ShowDialog();
                     return form.corona;

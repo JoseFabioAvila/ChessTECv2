@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 {
-    class NodoAli
+    /// <summary>
+    /// Calse del Nodo de primero mejor
+    /// </summary>
+    class NodoPM
     {
-        public List<NodoAli> hijos { get; set; }
+        public List<NodoPM> hijos { get; set; }
 
         public string recorrido { get; set; }
 
@@ -20,13 +23,19 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
         public string hoja { get; set; }
 
         public int correccion { get; set; }
-        
-        public NodoAli(Tablero tab, string recorrido, string turno)
+
+        /// <summary>
+        /// Constructor de clase
+        /// </summary>
+        /// <param name="tab">tablero de juego</param>
+        /// <param name="recorrido">recorrido recomendado al usuario</param>
+        /// <param name="turno">la ficha en turno</param>
+        public NodoPM(Tablero tab, string recorrido, string turno)
         {
             this.tablero = tab;
             this.recorrido = recorrido;
             this.turno = turno;
-            this.hijos = new List<NodoAli>();
+            this.hijos = new List<NodoPM>();
             if (turno.Equals("B"))
             {
                 correccion = 1;
@@ -36,6 +45,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
             }
         }
 
+        /// <summary>
+        /// agrega hijos a la lista de hijos
+        /// </summary>
         public void agregarHijo()
         {
             this.hijos.Add(this);

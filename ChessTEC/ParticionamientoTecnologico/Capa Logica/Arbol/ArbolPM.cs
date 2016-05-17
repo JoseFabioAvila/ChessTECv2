@@ -10,28 +10,46 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 {
-    class ArbolAli
+    /// <summary>
+    /// Calse de Arbol del primero mejor
+    /// </summary>
+    class ArbolPM
     {
-        public NodoAli raiz { get; set; }
+        public NodoPM raiz { get; set; }
 
         public Tablero tablero { get; set; }
+
         public string turno { get; set; }
 
         public Estadisticas estadisticas { get; set; }
 
-        Traductor traductor = new Traductor();
+        public string camino { get; set; }
 
-        public ArbolAli(Tablero tab)
+        public double valorT { get; set; }
+
+        Traductor traductor = new Traductor();
+        
+        /// <summary>
+        /// Constructor de clase
+        /// </summary>
+        /// <param name="tab">tablero</param>
+        public ArbolPM(Tablero tab)
         {
             this.estadisticas = new Estadisticas();
 
             this.tablero = tab;
             this.turno = tab.turno;
             
-            this.raiz = new NodoAli(tab, "", tab.turno);
+            this.raiz = new NodoPM(tab, "", tab.turno);
         }
 
-        public void expandir(NodoAli nodo, int nivel, int cont)
+        /// <summary>
+        /// Expande el nodo raiz
+        /// </summary>
+        /// <param name="nodo">nodo raiz</param>
+        /// <param name="nivel">nivel de profundiad deseado</param>
+        /// <param name="cont">contador que inicia en 0</param>
+        public void expandir(NodoPM nodo, int nivel, int cont)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
@@ -91,9 +109,9 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                                                 tasks[i].Wait();
                                             }
                                         }
-                                        catch (Exception e)
+                                        catch (AggregateException)
                                         {
-                                            e.Message.ToString();
+                                            //e.Message.ToString();
                                         }
                                     }
                                 }
@@ -114,19 +132,35 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             }
             else 
             {
+                
                 nodo.hoja = "Soy hoja";
+                camino = nodo.recorrido;
+                nodo.tablero.calularTodo();
+                valorT = nodo.tablero.valorT;
+                
             }
-
             sw.Stop();
+            this.estadisticas.tiempo = sw.ElapsedMilliseconds;
 
-            this.estadisticas.tiempo = sw.ElapsedMilliseconds;            
         }
 
-        public bool crearHijo(Tablero t, List<int[]> movilidad, int i, int x, int y, NodoAli nodo, int nivel, int cont)
+        /// <summary>
+        /// Crear hijo que es el mejor de toda las lista segun heuritica
+        /// </summary>
+        /// <param name="t">tablero</param>
+        /// <param name="movilidad">Lista de movilidad</param>
+        /// <param name="i">posicion de la lista de movilidad</param>
+        /// <param name="x">fila del tablero</param>
+        /// <param name="y">columna del tablero</param>
+        /// <param name="nodo">nodo actual</param>
+        /// <param name="nivel">nivel de profundiad deseado</param>
+        /// <param name="cont">contador que inicia en 0</param>
+        /// <returns>booleano que indica si operacion fue exitosa</returns>
+        public bool crearHijo(Tablero t, List<int[]> movilidad, int i, int x, int y, NodoPM nodo, int nivel, int cont)
         {
             try
             {
-                NodoAli hijo = new NodoAli(t, nodo.recorrido +" " + cont + ". " + nodo.tablero.turno + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1]) + " | ", t.turno);
+                NodoPM hijo = new NodoPM(t, nodo.recorrido +" " + cont + ". " + nodo.tablero.turno + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1]) + " | ", t.turno);
                 hijo.hoja = "No soy Hoja";
                 //Console.WriteLine(hijo.tablero.print());
 
@@ -143,9 +177,14 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             }
         }
 
-        private List<NodoAli> poda(List<NodoAli> nodosMovilidad)
+        /// <summary>
+        /// Poda los hijos de un nodo para sacar el mejor
+        /// </summary>
+        /// <param name="nodosMovilidad">Lista de nodos hijos del nodo actual</param>
+        /// <returns>Lista con los mejores hijos</returns>
+        private List<NodoPM> poda(List<NodoPM> nodosMovilidad)
         {
-            NodoAli mejorMovida = nodosMovilidad.ElementAt(0);
+            NodoPM mejorMovida = nodosMovilidad.ElementAt(0);
             if(mejorMovida.tablero.turno == "N") {
                 for (int i = 1; i < nodosMovilidad.Count; i++)
                 {
@@ -164,40 +203,10 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                 }
             }
 
-            List<NodoAli> na = new List<NodoAli>();
+            List<NodoPM> na = new List<NodoPM>();
             na.Add(mejorMovida);
 
             return na;
-        }
-
-        private void PrintDFS(NodoAli root, string spaces, int nivel, int mxl)
-        {
-            if (raiz == null || nivel == mxl)
-            {
-                Console.WriteLine("nulo");
-                return;
-            }
-            Console.WriteLine(spaces + "--> nivel " + nivel.ToString());
-            Console.WriteLine(spaces+"------------Turno : " + root.tablero.turno + "------------");
-            Console.WriteLine(spaces+"camino: "+root.recorrido);
-            Console.WriteLine(spaces + root.tablero.print2(spaces));
-
-            NodoAli child = null;
-            nivel++;
-            for (int i = 0; i < root.hijos.Count; i++)
-            {
-                child = root.hijos.ElementAt(i);
-                Console.WriteLine(spaces + "--> Hijo: " + i.ToString());
-                PrintDFS(child, spaces + "   ", nivel, mxl+1);
-            }            
-        }
-        
-        /// <summary>Traverses and prints the tree in
-        /// Depth-First Search (DFS) manner</summary>
-        public void TraverseDFS(int maxlevel)
-        {
-            Console.WriteLine("--> root");
-            PrintDFS(raiz, string.Empty, 0, maxlevel);
         }
     }
 }

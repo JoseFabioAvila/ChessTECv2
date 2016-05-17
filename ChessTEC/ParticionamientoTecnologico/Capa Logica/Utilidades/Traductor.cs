@@ -7,19 +7,37 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Utilidades
 {
+    /// <summary>
+    /// Clase que traduce la jugada para que sea mas lejible para el usuario
+    /// </summary>
     class Traductor
     {
         public Pieza pieza { get; set; }
         public int fila { get; set; }
         public int columna { get; set; }
 
+        /// <summary>
+        /// Constructor de clase
+        /// </summary>
         public Traductor(){}
 
+        /// <summary>
+        /// Traduce una posicion de ficha en tablero a simbologia mas entendible para el usaurio
+        /// </summary>
+        /// <param name="pieza">pieza de jugada</param>
+        /// <param name="fila">fila</param>
+        /// <param name="columna">columna</param>
+        /// <returns>String producto de la traduccion</returns>
         public string traducir(Pieza pieza, int fila,int columna)
         {
             return pieza.simbologia+getCol(columna)+getFil(fila);
         }
 
+        /// <summary>
+        /// Traduce la columna
+        /// </summary>
+        /// <param name="c">columna</param>
+        /// <returns>Columna traducida</returns>
         private string getCol(int c)
         {
             string col = "";
@@ -56,6 +74,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Utilidades
             return col;
         }
 
+        /// <summary>
+        /// Traduce la fila
+        /// </summary>
+        /// <param name="f">fila</param>
+        /// <returns>Fila traducida</returns>
         private string getFil(int f)
         {
             string fil = "";

@@ -7,27 +7,40 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 {
-    class Nodo
+    /// <summary>
+    /// Clase nodo del A* limitado
+    /// </summary>
+    class NodoAE   
     {
         public Tablero tablero { get; set; }
         public string recorrido { get; set; }
         public int profundidad { get; set; }
         public string turno { get; set; }
-
-        public List<Nodo> hijos { get; set; }
+        public List<NodoAE> hijos { get; set; }
 
         Traductor traductor = new Traductor();
 
-        public Nodo(Tablero tab, string recorrido, string turno,int prof)
+        /// <summary>
+        /// Constructor de clase
+        /// </summary>
+        /// <param name="tab">tablero</param>
+        /// <param name="recorrido">recorrido recomendado al usuario</param>
+        /// <param name="turno">turno de la partida</param>
+        /// <param name="prof">profundiadad</param>
+        public NodoAE(Tablero tab, string recorrido, string turno,int prof)
         {
             this.tablero = tab;
             this.recorrido = recorrido;
             this.turno = turno;
             this.profundidad = prof;
-            hijos = new List<Nodo>();
+            hijos = new List<NodoAE>();
         }
 
-        public Nodo(Nodo nodo)
+        /// <summary>
+        /// Cosntructor de clase
+        /// </summary>
+        /// <param name="nodo">Nodo de A* limitado</param>
+        public NodoAE(NodoAE nodo)
         {
             this.tablero = nodo.tablero;
             this.recorrido = nodo.recorrido;
@@ -36,7 +49,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 
         }
 
-        public List<Nodo> expandir()
+        /// <summary>
+        /// Metodo de expancion de nodos
+        /// </summary>
+        /// <returns>Lista de nodos expandidos</returns>
+        public List<NodoAE> expandir()
         {
             profundidad ++;
             for (int x = 0; x < tablero.matrizTablero.Length; x++)
@@ -48,7 +65,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
                     {
                         //tablero.buscarJugada(x, y, turno, true);
                         
-                        List<Nodo> nodosMovilidad = new List<Nodo>();
+                        List<NodoAE> nodosMovilidad = new List<NodoAE>();
                         List<int[]> movilidad = new List<int[]>(tablero.matrizTablero[x][y].movilidad);
 
                         Task[] tasks = new Task[movilidad.Count];
@@ -78,7 +95,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
 
                             if (funcionono)
                             {
-                                Nodo nuevoNodo = new Nodo(t, this.recorrido + " "+ profundidad + ". " + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1]), fc, profundidad);
+                                NodoAE nuevoNodo = new NodoAE(t, this.recorrido + " "+ profundidad + ". " + traductor.traducir(tablero.matrizTablero[x][y], movilidad.ElementAt(i)[0], movilidad.ElementAt(i)[1]), fc, profundidad);
                                 nodosMovilidad.Add(nuevoNodo);
                             }
                         }
@@ -90,9 +107,15 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Arbol
             return hijos;
         }
 
-        private Nodo poda(List<Nodo> nodosMovilidad, string turno)
+        /// <summary>
+        /// Metod encargado de podar los nodos que no son buena heuristica
+        /// </summary>
+        /// <param name="nodosMovilidad">Lista de nodos a podar</param>
+        /// <param name="turno">turno</param>
+        /// <returns>Mejor nodo segun heuristica</returns>
+        private NodoAE poda(List<NodoAE> nodosMovilidad, string turno)
         {
-            Nodo mejorMovida = nodosMovilidad.ElementAt(0);
+            NodoAE mejorMovida = nodosMovilidad.ElementAt(0);
             if (turno.Equals("B"))
             {
                 for (int i = 1; i < nodosMovilidad.Count; i++)

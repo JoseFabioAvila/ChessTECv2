@@ -10,19 +10,21 @@ using System.Windows.Forms;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Presentacion
 {
+    /// <summary>
+    /// clase de ventana de coronacion
+    /// </summary>
     public partial class CustomMessageForm : Form
     {
-        private string description;
-        private string title;
 
         public int corona;
+        
 
+        /// <summary>
+        /// Constructor de clase
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="description"></param>
         public CustomMessageForm()
-        {
-            InitializeComponent();
-        }
-
-        public CustomMessageForm(string title, string description)
         {
             var dataSource = new List<string>();
             dataSource.Add("Alfil");
@@ -31,8 +33,6 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Presentacion
             dataSource.Add("Caballo");
 
             InitializeComponent();
-            this.title = title;
-            this.description = description;
             this.comboBox1.DataSource = dataSource;
         }
 
@@ -41,6 +41,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Presentacion
 
         }
 
+        /// <summary>
+        /// Click que indica por cual pieza se cororna
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedItem.ToString().Equals("Alfil")) {

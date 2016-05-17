@@ -53,12 +53,10 @@
     <Compile Include="ParticionamientoTecnologico\Capa de Presentacion\CustomMessageForm.Designer.cs">
       <DependentUpon>CustomMessageForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\ArbolAli.cs" />
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\NodoAli.cs" />
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\rA-Estrella.cs" />
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\rAmplitudLimitado.cs" />
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Arbol.cs" />
-    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\Nodo.cs" />
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\ArbolPM.cs" />
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\NodoPM.cs" />
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\ArbolAE.cs" />
+    <Compile Include="ParticionamientoTecnologico\Capa Logica\Arbol\NodoAE.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Piezas\Alfil.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Piezas\Caballo.cs" />
     <Compile Include="ParticionamientoTecnologico\Capa Logica\Piezas\Peon.cs" />

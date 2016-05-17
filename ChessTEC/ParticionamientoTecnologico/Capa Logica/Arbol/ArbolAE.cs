@@ -10,28 +10,40 @@ using System.Threading.Tasks;
 
 namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
 {
-    class Arbol
+    /// <summary>
+    /// Clase del arbol del A* Limitado
+    /// </summary>
+    class ArbolAE
     {
-        public List<Nodo> variantes { get; set; }
-        public Nodo majorVariante { get; set; }
+        public List<NodoAE> variantes { get; set; }
+        public NodoAE majorVariante { get; set; }
         public string turno { get; set; }
-        public Nodo raiz { get; set; }
+        public NodoAE raiz { get; set; }
         public Estadisticas estadisticas { get; set; }
 
-        public Arbol(Tablero tablero)
+        /// <summary>
+        /// Cosntructor de clase
+        /// </summary>
+        /// <param name="tablero">tablero de juego</param>
+        public ArbolAE(Tablero tablero)
         {
             this.estadisticas = new Estadisticas();
             turno = tablero.turno;
-            raiz = new Nodo(tablero, "", turnoAc(tablero), 0); // Crear nodo raiz
+            raiz = new NodoAE(tablero, "", turnoAc(tablero), 0); // Crear nodo raiz
             variantes = raiz.expandir();
         }
 
-        public Nodo analizar(int profLimite)
+        /// <summary>
+        /// Analiza los nodos hijos del nodo atual para buscar su mejor euristica hasta la profundiad deseada
+        /// </summary>
+        /// <param name="profLimite">profundiada deseada</param>
+        /// <returns>Nodo con el mejor camino</returns>
+        public NodoAE analizar(int profLimite)
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            Nodo mejorJugada;
+            NodoAE mejorJugada;
             do
             {
                 mejorJugada = variantes.ElementAt(0);
@@ -56,7 +68,7 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
                     }
                 }
                 variantes.RemoveAt(posMejorJugada);
-                List<Nodo> nuevasVariantes = reemplazar(mejorJugada);
+                List<NodoAE> nuevasVariantes = reemplazar(mejorJugada);
                 variantes = variantes.Concat(nuevasVariantes)
                                     .ToList();
             } while (mejorJugada.profundidad < profLimite);
@@ -69,10 +81,15 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
             return mejorJugada;
         }
 
-        public List<Nodo> reemplazar(Nodo nodoAExpandir) {
+        /// <summary>
+        /// Remplaza lalista de nodos hijos con los mejores hijos 
+        /// </summary>
+        /// <param name="nodoAExpandir">nodo al que se expande</param>
+        /// <returns>Nueva lista de mejores hijos</returns>
+        public List<NodoAE> reemplazar(NodoAE nodoAExpandir) {
 
-            List<Nodo> respuestas = nodoAExpandir.expandir();
-            Nodo mejorRespuesta = respuestas.ElementAt(0);
+            List<NodoAE> respuestas = nodoAExpandir.expandir();
+            NodoAE mejorRespuesta = respuestas.ElementAt(0);
             if (turno.Equals("B"))
             {
                 for (int i = 1; i < respuestas.Count; i++)
@@ -92,6 +109,11 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
             return mejorRespuesta.expandir();
         }
         
+        /// <summary>
+        /// Cambia de turno
+        /// </summary>
+        /// <param name="t">tablero</param>
+        /// <returns>nuevo turno</returns>
         private string turnoAc(Tablero t)
         {
             if (t.turno.Equals("B"))
@@ -101,21 +123,14 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_Logica.Arbol
             return "B";
         }
 
+        /// <summary>
+        /// Devuelve el recorrido de toda la operacion de expancion del nodo raiz
+        /// </summary>
+        /// <returns>Devuelve el recorrido de toda la operacion de expancion del nodo raiz</returns>
         public String PrintA()
         {
-            Nodo n = this.variantes.Last();
-            //Console.WriteLine("\nProfundidad: " + n.profundidad);
-            //Console.WriteLine("Turno: " + n.turno);
-            //Console.WriteLine(n.recorrido);
-            //Console.WriteLine("/*************************************************************/" + "\n");
+            NodoAE n = this.variantes.Last();
             return n.recorrido;
-            //foreach(Nodo n in this.variantes)
-            //{
-            //    Console.WriteLine("\nProfundidad: " + n.profundidad);
-            //    Console.WriteLine("Turno: " + n.turno);
-            //    Console.WriteLine(n.recorrido);
-            //    Console.WriteLine("/*************************************************************/" + "\n");        
-            //}
         }
     }
 }
