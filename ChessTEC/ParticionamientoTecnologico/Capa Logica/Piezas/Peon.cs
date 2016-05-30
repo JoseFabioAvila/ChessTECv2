@@ -191,12 +191,15 @@ namespace ChessTEC.ParticionamientoTecnologico.Capa_de_Negocios.Piezas
                     posIni = 1;
                     break;
             }
-            
-            avanzar(fila, tempF, tempF2, columna, posIni, tablero);
 
-            comerIzq(tempF, columna, tablero);
+            if ((tempF <= 7 && tempF >= 0) && (tempF2 <= 7 && tempF2 >= 0))
+            {
+                avanzar(fila, tempF, tempF2, columna, posIni, tablero);
 
-            comerDer(tempF, columna, tablero);
+                comerIzq(tempF, columna, tablero);
+
+                comerDer(tempF, columna, tablero);
+            }
         }
         
         private void avanzar(int fila, int tempF, int tempF2, int columna, int posIni, Tablero tablero) {
